@@ -1,939 +1,1084 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Roots & Wings — Empowering Youth</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>HGY Mission — Holy Ground of Yahweh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-    :root {
-      --soil:       #1a0f00;
-      --bark:       #2e1a05;
-      --amber:      #e07b2a;
-      --gold:       #f5c842;
-      --leaf:       #4caf7d;
-      --white:      #ffffff;
-      --text:       #1a0f00;
-      --muted:      #7a6650;
-      /* glass tokens */
-      --glass-bg:         rgba(255,255,255,0.55);
-      --glass-bg-heavy:   rgba(255,255,255,0.72);
-      --glass-border:     rgba(255,255,255,0.65);
-      --glass-shadow:     0 8px 32px rgba(26,15,0,0.10);
-      --glass-blur:       blur(18px);
-      --glass-blur-sm:    blur(10px);
+    :root{
+      --p:       #5c0a2e;
+      --pd:      #3d0620;
+      --pm:      #7a1040;
+      --pl:      #a3315a;
+      --w:       #ffffff;
+      --text:    #1e0210;
+      --muted:   #7a5068;
+      --gb:      rgba(255,255,255,0.52);
+      --gh:      rgba(255,255,255,0.80);
+      --gborder: rgba(255,255,255,0.70);
+      --gshadow: 0 8px 40px rgba(92,10,46,0.09);
+      --blur:    blur(20px);
+      --blurs:   blur(12px);
     }
 
-    html { scroll-behavior: smooth; }
+    html{scroll-behavior:smooth}
 
-    body {
-      font-family: 'Nunito', sans-serif;
-      background: var(--white);
-      color: var(--text);
-      overflow-x: hidden;
-      cursor: none;
+    body{
+      font-family:'Nunito',sans-serif;
+      background:var(--w);
+      color:var(--text);
+      overflow-x:hidden;
+      cursor:none;
     }
 
-    /* ── hero gradient scene background ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: -2;
+    /* fixed subtle page glow — stays behind everything */
+    body::before{
+      content:'';
+      position:fixed;inset:0;z-index:-1;
       background:
-        radial-gradient(ellipse 80% 60% at 15% 20%, rgba(224,123,42,0.13) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 50% at 85% 75%, rgba(76,175,125,0.11) 0%, transparent 55%),
-        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(245,200,66,0.07) 0%, transparent 70%),
-        #ffffff;
-      pointer-events: none;
+        radial-gradient(ellipse 70% 55% at 8% 12%, rgba(92,10,46,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 45% at 92% 88%, rgba(163,49,90,0.06) 0%, transparent 55%),
+        #fff;
+      pointer-events:none;
     }
 
-    @media (pointer: coarse) {
-      body { cursor: auto; }
-      .cursor-dot, .cursor-ring { display: none; }
+    @media(pointer:coarse){body{cursor:auto}.cursor-dot,.cursor-ring{display:none}}
+
+    .cursor-dot{position:fixed;top:0;left:0;z-index:9999;width:9px;height:9px;border-radius:50%;background:var(--p);pointer-events:none;transform:translate(-50%,-50%)}
+    .cursor-ring{position:fixed;top:0;left:0;z-index:9998;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--p);pointer-events:none;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+
+    /* ════ NAV ════ */
+    nav{
+      position:fixed;top:0;width:100%;z-index:300;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:.85rem 3rem;
+      background:var(--gh);
+      backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+      border-bottom:1px solid var(--gborder);
+      box-shadow:0 2px 20px rgba(92,10,46,0.07);
+      transition:background .3s,box-shadow .3s;
+    }
+    nav.scrolled{background:rgba(255,255,255,0.94);box-shadow:0 4px 28px rgba(92,10,46,0.11)}
+    .nav-logo{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+    .nav-logo img{width:40px;height:40px;border-radius:8px;object-fit:contain}
+    .nav-logo-text{display:flex;flex-direction:column;line-height:1.1}
+    .nav-logo-abbr{font-family:'Playfair Display',serif;font-size:1.22rem;font-weight:900;color:var(--p);letter-spacing:.03em}
+    .nav-logo-sub{font-size:.57rem;font-weight:700;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+    .nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center}
+    .nav-links a{font-size:.79rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;color:var(--muted);position:relative;transition:color .2s}
+    .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:var(--p);transition:width .25s}
+    .nav-links a:hover{color:var(--p)}
+    .nav-links a:hover::after{width:100%}
+    .nav-cta{background:var(--p)!important;color:#fff!important;padding:.46rem 1.3rem!important;border-radius:100px;font-weight:900!important}
+    .nav-cta::after{display:none!important}
+    .nav-cta:hover{background:var(--pm)!important}
+    .nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+    .nav-burger span{display:block;width:23px;height:2px;background:var(--p);border-radius:2px;transition:transform .3s,opacity .3s}
+    .nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .nav-burger.open span:nth-child(2){opacity:0}
+    .nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+    /* ════ HERO ════ */
+    .hero{
+      min-height:100vh;
+      display:grid;grid-template-columns:1fr 1fr;align-items:center;
+      padding:8rem 3rem 5rem;gap:3rem;
+      position:relative;overflow:hidden;
+      background:transparent; /* let body::before show through */
+    }
+    /* grain texture — no colour tint, just texture */
+    .hero-grain{
+      position:absolute;inset:0;z-index:0;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
+    }
+    .hero-content{position:relative;z-index:2}
+    .hero-eyebrow{font-family:'Space Mono',monospace;font-size:.67rem;letter-spacing:.18em;text-transform:uppercase;color:var(--p);margin-bottom:1.1rem;display:flex;align-items:center;gap:.55rem;opacity:0;animation:fadeUp .8s .3s forwards}
+    .hero-eyebrow::before{content:'';display:inline-block;width:26px;height:1.5px;background:var(--p)}
+    .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,4.8vw,5rem);font-weight:900;line-height:1.06;letter-spacing:-.025em;color:var(--pd);opacity:0;animation:fadeUp .9s .5s forwards}
+    .hero-title em{font-style:italic;color:var(--pl);position:relative}
+    .hero-title em::after{content:'';position:absolute;bottom:2px;left:0;right:0;height:3px;background:var(--pl);opacity:.22;border-radius:2px}
+    .hero-body{margin-top:1.7rem;font-size:1.05rem;line-height:1.85;color:var(--muted);max-width:460px;font-weight:400;opacity:0;animation:fadeUp .9s .7s forwards}
+    .hero-actions{margin-top:2.2rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;opacity:0;animation:fadeUp .9s .9s forwards}
+    .btn-primary{background:var(--p);color:#fff;padding:.88rem 2.1rem;border-radius:100px;font-weight:900;font-size:.92rem;letter-spacing:.02em;text-decoration:none;border:none;cursor:pointer;display:inline-block;transition:background .2s,transform .15s,box-shadow .2s}
+    .btn-primary:hover{background:var(--pm);transform:translateY(-2px);box-shadow:0 8px 28px rgba(92,10,46,.26)}
+    .btn-ghost{color:var(--p);font-weight:700;font-size:.92rem;text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:gap .2s,color .2s}
+    .btn-ghost:hover{gap:.85rem;color:var(--pm)}
+    .btn-ghost svg{transition:transform .2s}
+    .btn-ghost:hover svg{transform:translateX(3px)}
+
+    /* hero cards */
+    .hero-visual{position:relative;z-index:2;display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeIn 1.2s .6s forwards}
+    .hero-card-stack{position:relative;width:380px;height:460px}
+    .hero-card{position:absolute;border-radius:24px;overflow:hidden}
+    .hero-card-back{
+      width:300px;height:380px;
+      background:linear-gradient(145deg,rgba(92,10,46,.86),rgba(61,6,32,.93));
+      backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,.13);
+      box-shadow:0 20px 60px rgba(92,10,46,.28);
+      top:40px;left:55px;transform:rotate(6deg);
+      display:flex;align-items:flex-end;padding:1.8rem;
+    }
+    .hero-card-back-text{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:rgba(255,255,255,.92);line-height:1.35}
+    .hero-card-front{
+      width:280px;height:360px;
+      background:var(--gh);
+      backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+      border:1px solid var(--gborder);
+      box-shadow:0 20px 60px rgba(92,10,46,.10);
+      top:20px;left:28px;transform:rotate(-3deg);
+      display:flex;flex-direction:column;justify-content:space-between;padding:2rem;
+    }
+    .card-stat{font-family:'Space Mono',monospace}
+    .card-stat-num{font-size:3rem;font-weight:700;color:var(--p);line-height:1}
+    .card-stat-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+    .card-dots{display:flex;gap:.4rem}
+    .card-dots span{width:8px;height:8px;border-radius:50%;background:rgba(92,10,46,.14)}
+    .card-dots span:first-child{background:var(--p)}
+    .hero-badge{
+      position:absolute;bottom:8px;right:0;
+      background:var(--gh);
+      backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+      border:1px solid var(--gborder);
+      color:var(--pd);padding:.85rem 1.2rem;border-radius:18px;
+      font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;line-height:1.5;
+      box-shadow:0 8px 28px rgba(92,10,46,.10);
+      display:flex;align-items:center;gap:.5rem;
+      animation:float 4s ease-in-out infinite;
     }
 
-    /* ── CURSOR ── */
-    .cursor-dot {
-      position: fixed; top: 0; left: 0; z-index: 9999;
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--amber); pointer-events: none;
-      transform: translate(-50%,-50%);
-    }
-    .cursor-ring {
-      position: fixed; top: 0; left: 0; z-index: 9998;
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 1.5px solid var(--amber); pointer-events: none;
-      transform: translate(-50%,-50%);
-      transition: width 0.2s, height 0.2s;
-    }
+    /* ════ MARQUEE ════ */
+    .marquee-wrap{background:var(--pd);padding:.85rem 0;overflow:hidden;white-space:nowrap;position:relative;z-index:1}
+    .marquee-track{display:inline-flex;animation:marquee 26s linear infinite}
+    .marquee-item{font-family:'Space Mono',monospace;font-size:.71rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.58);padding:0 2rem;display:flex;align-items:center;gap:1rem}
+    .msep{color:rgba(255,255,255,.22)}
 
-    /* ═══════════════════════════════
-       NAV — glass
-    ═══════════════════════════════ */
-    nav {
-      position: fixed; top: 0; width: 100%; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0.9rem 3rem;
-      background: var(--glass-bg-heavy);
-      backdrop-filter: var(--glass-blur);
-      -webkit-backdrop-filter: var(--glass-blur);
-      border-bottom: 1px solid var(--glass-border);
-      box-shadow: var(--glass-shadow);
-      transition: background 0.3s;
-    }
-    nav.scrolled { background: rgba(255,255,255,0.82); }
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem; font-weight: 900;
-      color: var(--soil); letter-spacing: -0.02em; white-space: nowrap;
-    }
-    .nav-logo span { color: var(--amber); }
-    .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
-    .nav-links a {
-      font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; text-decoration: none;
-      color: var(--muted); position: relative; transition: color 0.2s;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: -3px; left: 0;
-      width: 0; height: 1.5px; background: var(--amber); transition: width 0.25s;
-    }
-    .nav-links a:hover { color: var(--amber); }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-cta {
-      background: var(--soil) !important; color: var(--gold) !important;
-      padding: 0.5rem 1.3rem !important; border-radius: 100px; font-weight: 900 !important;
-    }
-    .nav-cta::after { display: none !important; }
-    .nav-cta:hover { background: var(--amber) !important; color: var(--soil) !important; }
-    .nav-burger {
-      display: none; flex-direction: column; gap: 5px;
-      background: none; border: none; cursor: pointer; padding: 4px;
-    }
-    .nav-burger span {
-      display: block; width: 24px; height: 2px;
-      background: var(--soil); border-radius: 2px; transition: transform 0.3s, opacity 0.3s;
-    }
-    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-burger.open span:nth-child(2) { opacity: 0; }
-    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    /* ════ SHARED SECTION STYLES ════ */
+    .section-label{font-family:'Space Mono',monospace;font-size:.67rem;letter-spacing:.18em;text-transform:uppercase;color:var(--p);margin-bottom:.9rem;display:flex;align-items:center;gap:.55rem}
+    .section-label::before{content:'';width:20px;height:1.5px;background:var(--p)}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.85rem,3vw,3rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;color:var(--pd)}
+    .section-body{margin-top:1.4rem;font-size:1rem;line-height:1.85;color:var(--muted);font-weight:400}
 
-    /* ═══════════════════════════════
-       HERO
-    ═══════════════════════════════ */
-    .hero {
-      min-height: 100vh;
-      display: grid; grid-template-columns: 1fr 1fr; align-items: center;
-      padding: 8rem 3rem 5rem; gap: 3rem; position: relative; overflow: hidden;
+    /* ════ MISSION ════ */
+    .mission{padding:8rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;position:relative;z-index:1}
+    .mission-pillars{margin-top:2.2rem;display:flex;flex-direction:column;gap:.85rem}
+    .pillar{
+      display:flex;gap:.9rem;align-items:flex-start;padding:1rem 1.3rem;
+      background:var(--gb);border:1px solid var(--gborder);
+      backdrop-filter:var(--blurs);-webkit-backdrop-filter:var(--blurs);
+      box-shadow:var(--gshadow);border-radius:14px;transition:all .22s;
     }
-    .hero-grain {
-      position: absolute; inset: 0; z-index: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events: none;
+    .pillar:hover{background:var(--gh);transform:translateX(5px);box-shadow:0 12px 36px rgba(92,10,46,.11)}
+    .pillar-icon{width:38px;height:38px;border-radius:10px;background:var(--p);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .pillar-icon svg{width:19px;height:19px}
+    .pillar-title{font-weight:900;font-size:.92rem;color:var(--pd);margin-bottom:.18rem}
+    .pillar-desc{font-size:.85rem;color:var(--muted);line-height:1.6}
+    .mission-visual{position:relative}
+    .mission-img{
+      width:100%;aspect-ratio:4/5;
+      background:linear-gradient(155deg,var(--pd) 0%,var(--pl) 100%);
+      border-radius:24px 80px 24px 24px;overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 24px 72px rgba(92,10,46,.20);
     }
-    .hero-content { position: relative; z-index: 2; }
-    .hero-eyebrow {
-      font-family: 'Space Mono', monospace; font-size: 0.7rem;
-      letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber);
-      margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem;
-      opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+    .mission-img-inner{
+      width:85%;height:85%;
+      background:rgba(255,255,255,.08);
+      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,.17);
+      border-radius:16px 60px 16px 16px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:2rem;
     }
-    .hero-eyebrow::before { content: ''; display: inline-block; width: 28px; height: 1.5px; background: var(--amber); }
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.8rem, 5vw, 5.5rem);
-      font-weight: 900; line-height: 1.05; letter-spacing: -0.03em; color: var(--soil);
-      opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
-    }
-    .hero-title em { font-style: italic; color: var(--amber); position: relative; }
-    .hero-title em::after {
-      content: ''; position: absolute; bottom: 2px; left: 0; right: 0;
-      height: 3px; background: var(--gold); opacity: 0.5; border-radius: 2px;
-    }
-    .hero-body {
-      margin-top: 1.8rem; font-size: 1.08rem; line-height: 1.8;
-      color: var(--muted); max-width: 460px; font-weight: 400;
-      opacity: 0; animation: fadeUp 0.9s 0.7s forwards;
-    }
-    .hero-actions {
-      margin-top: 2.4rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
-      opacity: 0; animation: fadeUp 0.9s 0.9s forwards;
-    }
-    .btn-primary {
-      background: var(--soil); color: var(--gold); padding: 0.9rem 2.2rem;
-      border-radius: 100px; font-weight: 900; font-size: 0.95rem; font-family: 'Nunito', sans-serif;
-      letter-spacing: 0.02em; text-decoration: none; border: none; cursor: pointer;
-      display: inline-block; transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-    }
-    .btn-primary:hover {
-      background: var(--amber); color: var(--soil);
-      transform: translateY(-2px); box-shadow: 0 8px 28px rgba(224,123,42,0.35);
-    }
-    .btn-ghost {
-      color: var(--soil); font-weight: 700; font-size: 0.95rem;
-      text-decoration: none; display: flex; align-items: center; gap: 0.5rem;
-      transition: gap 0.2s, color 0.2s;
-    }
-    .btn-ghost:hover { gap: 0.85rem; color: var(--amber); }
-    .btn-ghost svg { transition: transform 0.2s; }
-    .btn-ghost:hover svg { transform: translateX(3px); }
+    .mission-img-inner img{width:60px;height:60px;object-fit:contain;opacity:.25;filter:brightness(0) invert(1);margin-bottom:.3rem}
+    .mission-quote{font-family:'Playfair Display',serif;font-size:1.18rem;font-style:italic;color:rgba(255,255,255,.92);text-align:center;line-height:1.55}
+    .mission-ref{font-family:'Space Mono',monospace;font-size:.67rem;color:rgba(255,255,255,.42);letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem}
+    .mission-badge{position:absolute;bottom:-16px;right:-16px;width:104px;height:104px;background:var(--p);border-radius:50%;border:6px solid var(--w);display:flex;align-items:center;justify-content:center;flex-direction:column;font-family:'Space Mono',monospace;box-shadow:0 8px 28px rgba(92,10,46,.26)}
+    .mission-badge-yr{font-size:.6rem;color:rgba(255,255,255,.5)}
+    .mission-badge-est{font-size:1.1rem;font-weight:700;color:#fff}
 
-    /* hero glass cards */
-    .hero-visual {
-      position: relative; z-index: 2;
-      display: flex; justify-content: center; align-items: center;
-      opacity: 0; animation: fadeIn 1.2s 0.6s forwards;
+    /* ════ PROGRAMS ════ */
+    .programs{
+      background:var(--pd);
+      padding:8rem 3rem;
+      position:relative;z-index:1;
+      /* no ::before radial that bled into siblings */
     }
-    .hero-card-stack { position: relative; width: 380px; height: 460px; }
-    .hero-card { position: absolute; border-radius: 24px; overflow: hidden; }
+    /* subtle inner glow only, clipped to this section */
+    .programs-glow{
+      position:absolute;top:0;right:0;width:50%;height:100%;pointer-events:none;
+      background:radial-gradient(ellipse 70% 60% at 100% 30%, rgba(163,49,90,.10) 0%, transparent 70%);
+    }
+    .programs-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;position:relative;z-index:2}
+    .programs-header .section-title{color:rgba(255,255,255,.95)}
+    .programs-header .section-label{color:rgba(255,255,255,.42)}
+    .programs-header .section-label::before{background:rgba(255,255,255,.32)}
+    .program-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;position:relative;z-index:2}
+    .program-card{
+      background:rgba(255,255,255,.06);
+      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:0 8px 28px rgba(0,0,0,.18);
+      border-radius:22px;padding:2.3rem 2rem;
+      position:relative;overflow:hidden;
+      transition:transform .25s,background .25s,box-shadow .25s;
+    }
+    .program-card:hover{transform:translateY(-7px);background:rgba(255,255,255,.10);box-shadow:0 24px 56px rgba(0,0,0,.28)}
+    .program-card-accent{position:absolute;top:0;left:0;right:0;height:3px}
+    .program-card:nth-child(1) .program-card-accent{background:var(--pl)}
+    .program-card:nth-child(2) .program-card-accent{background:rgba(255,255,255,.4)}
+    .program-card:nth-child(3) .program-card-accent{background:rgba(255,190,190,.45)}
+    .program-icon{width:50px;height:50px;border-radius:14px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem}
+    .program-icon svg{width:24px;height:24px;stroke:rgba(255,255,255,.82)}
+    .program-name{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:rgba(255,255,255,.95);margin-bottom:.7rem;line-height:1.2}
+    .program-desc{font-size:.87rem;line-height:1.75;color:rgba(255,255,255,.46);font-weight:400}
+    .program-link{margin-top:1.8rem;display:flex;align-items:center;gap:.45rem;font-size:.79rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.5);transition:gap .2s,color .2s}
+    .program-link:hover{gap:.85rem;color:rgba(255,255,255,.92)}
 
-    .hero-card-back {
-      width: 300px; height: 380px;
-      background: linear-gradient(145deg, rgba(76,175,125,0.85), rgba(45,138,90,0.9));
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 0 16px 48px rgba(76,175,125,0.25);
-      top: 40px; left: 55px; transform: rotate(6deg);
-      display: flex; align-items: flex-end; padding: 1.8rem;
+    /* ════ GOALS ════ */
+    .goals{padding:8rem 3rem;position:relative;z-index:1}
+    .goals-header{text-align:center;margin-bottom:4rem}
+    .goals-header .section-label{justify-content:center}
+    .goals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:4rem}
+    .goal-card{
+      background:var(--gb);
+      backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+      border:1px solid var(--gborder);
+      box-shadow:var(--gshadow);
+      border-radius:22px;padding:2.3rem 2rem;
+      position:relative;overflow:hidden;
+      transition:transform .25s,box-shadow .25s;
     }
-    .hero-card-back-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.35rem; font-weight: 700; color: white; line-height: 1.3;
-    }
-    .hero-card-front {
-      width: 280px; height: 360px;
-      background: rgba(26,15,0,0.88);
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(245,200,66,0.2);
-      box-shadow: 0 20px 60px rgba(26,15,0,0.3);
-      top: 20px; left: 28px; transform: rotate(-3deg);
-      display: flex; flex-direction: column; justify-content: space-between; padding: 2rem;
-    }
-    .card-stat { font-family: 'Space Mono', monospace; }
-    .card-stat-num { font-size: 3.2rem; font-weight: 700; color: var(--gold); line-height: 1; }
-    .card-stat-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,200,66,0.55); margin-top: 0.3rem; }
-    .card-dots { display: flex; gap: 0.4rem; }
-    .card-dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(245,200,66,0.25); }
-    .card-dots span:first-child { background: var(--gold); }
+    .goal-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(92,10,46,.13)}
+    .goal-card-accent{position:absolute;top:0;left:0;right:0;height:3px;background:var(--p);transform:scaleX(0);transform-origin:left;transition:transform .35s}
+    .goal-card:hover .goal-card-accent{transform:scaleX(1)}
+    .goal-icon{width:50px;height:50px;border-radius:14px;background:rgba(92,10,46,.08);display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem}
+    .goal-icon svg{width:24px;height:24px;stroke:var(--p)}
+    .goal-year{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--pl);margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+    .goal-year::before{content:'';width:14px;height:1px;background:var(--pl)}
+    .goal-name{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--pd);margin-bottom:.65rem;line-height:1.2}
+    .goal-desc{font-size:.86rem;line-height:1.75;color:var(--muted)}
 
-    .hero-float-badge {
-      position: absolute; bottom: 10px; right: 0;
-      background: var(--glass-bg-heavy);
-      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-      border: 1px solid var(--glass-border);
-      color: var(--soil); padding: 0.9rem 1.3rem; border-radius: 18px;
-      font-family: 'Space Mono', monospace; font-size: 0.75rem; font-weight: 700; line-height: 1.55;
-      box-shadow: 0 8px 32px rgba(224,123,42,0.18);
-      display: flex; align-items: center; gap: 0.5rem;
-      animation: float 4s ease-in-out infinite;
+    /* vision band */
+    .vision-band{
+      background:var(--p);
+      padding:5rem 3rem;
+      position:relative;z-index:1;overflow:hidden;
     }
+    .vision-band::before{
+      content:'';position:absolute;inset:0;pointer-events:none;
+      background-image:repeating-linear-gradient(
+        -55deg,transparent,transparent 40px,
+        rgba(255,255,255,.025) 40px,rgba(255,255,255,.025) 41px
+      );
+    }
+    .vision-band-inner{
+      position:relative;z-index:2;
+      display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+    }
+    .vision-statement{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3vw,2.5rem);font-weight:900;color:#fff;line-height:1.2;letter-spacing:-.015em}
+    .vision-statement em{font-style:italic;opacity:.75}
+    .vision-items{display:flex;flex-direction:column;gap:1rem}
+    .vision-item{
+      display:flex;gap:.85rem;align-items:flex-start;
+      padding:.95rem 1.1rem;
+      background:rgba(255,255,255,.1);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:14px;
+      transition:background .2s;
+    }
+    .vision-item:hover{background:rgba(255,255,255,.16)}
+    .vision-item-icon{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .vision-item-icon svg{width:16px;height:16px;stroke:#fff}
+    .vision-item-title{font-weight:900;font-size:.88rem;color:#fff;margin-bottom:.1rem}
+    .vision-item-desc{font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.5}
 
-    /* ═══════════════════════════════
-       MARQUEE
-    ═══════════════════════════════ */
-    .marquee-wrap {
-      background: var(--soil); padding: 0.9rem 0;
-      overflow: hidden; white-space: nowrap;
+    /* ════ AI SECTION ════ */
+    .ai-section{padding:8rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative;z-index:1}
+    .ai-card{
+      background:var(--gh);
+      backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+      border:1px solid var(--gborder);box-shadow:var(--gshadow);
+      border-radius:24px;padding:2rem;position:relative;
     }
-    .marquee-track { display: inline-flex; animation: marquee 22s linear infinite; }
-    .marquee-item {
-      font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--gold); padding: 0 2rem; opacity: 0.75;
-      display: flex; align-items: center; gap: 1.2rem;
+    .ai-badge{
+      position:absolute;top:-14px;right:20px;
+      background:var(--p);color:#fff;
+      padding:.42rem 1rem;border-radius:100px;
+      font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;
+      box-shadow:0 4px 18px rgba(92,10,46,.28);
+      display:flex;align-items:center;gap:.38rem;
     }
-    .marquee-sep { color: var(--amber); opacity: 0.6; }
+    .ai-card-header{display:flex;align-items:center;gap:.7rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid rgba(92,10,46,.08)}
+    .ai-dot{width:9px;height:9px;border-radius:50%;background:var(--p);animation:pulse 2s ease-in-out infinite;flex-shrink:0}
+    .ai-card-title{font-weight:900;font-size:.87rem;color:var(--pd);letter-spacing:.02em}
+    .ai-card-sub{font-size:.68rem;color:var(--muted);font-family:'Space Mono',monospace}
+    .ai-items{display:flex;flex-direction:column;gap:.7rem}
+    .ai-item{display:flex;gap:.7rem;align-items:flex-start;padding:.82rem .95rem;background:rgba(92,10,46,.04);border:1px solid rgba(92,10,46,.07);border-radius:12px;transition:background .2s}
+    .ai-item:hover{background:rgba(92,10,46,.07)}
+    .ai-item-icon{width:30px;height:30px;border-radius:8px;background:var(--p);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .ai-item-icon svg{width:14px;height:14px;stroke:#fff}
+    .ai-item-title{font-weight:900;font-size:.83rem;color:var(--pd);margin-bottom:.1rem}
+    .ai-item-desc{font-size:.79rem;color:var(--muted);line-height:1.5}
 
-    /* ═══════════════════════════════
-       STATS — glass cards
-    ═══════════════════════════════ */
-    .stats {
-      background: transparent; padding: 4rem 3rem;
-      display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem;
+    /* ════ DONATE ════ */
+    .donate{
+      background:var(--p);padding:7rem 3rem;
+      display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+      position:relative;z-index:1;overflow:hidden;
     }
-    .stat-card {
-      background: var(--glass-bg);
-      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-      border: 1px solid var(--glass-border);
-      box-shadow: var(--glass-shadow);
-      padding: 2.5rem 2rem; text-align: center;
-      border-radius: 20px; position: relative; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s;
+    .donate::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,.022) 40px,rgba(255,255,255,.022) 41px)}
+    .donate-content{position:relative;z-index:2}
+    .donate .section-label{color:rgba(255,255,255,.46)}
+    .donate .section-label::before{background:rgba(255,255,255,.32)}
+    .donate .section-title{color:#fff}
+    .donate-body{margin-top:1.1rem;font-size:1rem;line-height:1.82;color:rgba(255,255,255,.58);font-weight:400}
+    .donate-widget{
+      position:relative;z-index:2;
+      background:rgba(255,255,255,.14);
+      backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+      border:1px solid rgba(255,255,255,.26);
+      border-radius:24px;padding:2rem;
+      box-shadow:0 12px 48px rgba(0,0,0,.14);
+      display:flex;flex-direction:column;gap:.9rem;
     }
-    .stat-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(26,15,0,0.14); }
-    .stat-card::before {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-      height: 3px; background: var(--amber); transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
-    }
-    .stat-card:hover::before { transform: scaleX(1); }
-    .stat-num { font-family: 'Playfair Display', serif; font-size: 3.2rem; font-weight: 900; color: var(--soil); line-height: 1; }
-    .stat-num span { color: var(--amber); }
-    .stat-label { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.6rem; font-weight: 700; }
+    .amount-row{display:flex;gap:.7rem}
+    .amount-btn{flex:1;padding:.82rem .4rem;border:1.5px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);border-radius:12px;font-family:'Space Mono',monospace;font-size:.92rem;font-weight:700;color:#fff;cursor:pointer;transition:all .2s}
+    .amount-btn:hover,.amount-btn.active{background:#fff;color:var(--p);border-color:#fff}
+    .amount-input{width:100%;padding:.82rem 1.1rem;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.12);border-radius:12px;font-size:.93rem;font-family:'Nunito',sans-serif;color:#fff;outline:none;transition:all .2s}
+    .amount-input:focus{border-color:rgba(255,255,255,.62);background:rgba(255,255,255,.2)}
+    .amount-input::placeholder{color:rgba(255,255,255,.36)}
+    .btn-donate{width:100%;background:#fff;color:var(--p);padding:1.05rem;border-radius:100px;font-weight:900;font-size:.93rem;font-family:'Nunito',sans-serif;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.45rem;transition:background .2s,transform .15s,box-shadow .2s}
+    .btn-donate:hover{background:#f5eaf0;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.13)}
+    .donate-note{text-align:center;font-size:.7rem;color:rgba(255,255,255,.36);font-family:'Space Mono',monospace;display:flex;align-items:center;justify-content:center;gap:.35rem}
 
-    /* ═══════════════════════════════
-       MISSION
-    ═══════════════════════════════ */
-    .mission { padding: 8rem 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
-    .section-label {
-      font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--amber); margin-bottom: 1rem;
-      display: flex; align-items: center; gap: 0.6rem;
-    }
-    .section-label::before { content: ''; width: 22px; height: 1.5px; background: var(--amber); }
-    .section-title {
-      font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 3.2vw, 3.1rem);
-      font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; color: var(--soil);
-    }
-    .section-body { margin-top: 1.5rem; font-size: 1.02rem; line-height: 1.85; color: var(--muted); font-weight: 400; }
+    /* ════ FOOTER ════ */
+    footer{background:var(--pd);padding:5rem 3rem 2.5rem;position:relative;z-index:1}
+    footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.13),transparent)}
+    .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+    .footer-brand-logo{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+    .footer-brand-logo img{width:42px;height:42px;border-radius:8px;object-fit:contain;filter:brightness(0) invert(1);opacity:.78}
+    .footer-abbr{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:900;color:#fff}
+    .footer-full{font-size:.6rem;font-weight:700;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.05em}
+    .footer-tagline{font-size:.9rem;line-height:1.75;color:rgba(255,255,255,.36);max-width:268px;margin-bottom:1.4rem}
+    .footer-socials{display:flex;gap:.65rem}
+    .social-btn{width:33px;height:33px;border-radius:9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;text-decoration:none;color:rgba(255,255,255,.4);transition:all .2s}
+    .social-btn svg{width:14px;height:14px}
+    .social-btn:hover{background:var(--pl);border-color:var(--pl);color:#fff}
+    .footer-col-title{font-family:'Space Mono',monospace;font-size:.64rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:1.2rem}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+    .footer-links a{font-size:.89rem;color:rgba(255,255,255,.38);text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:rgba(255,255,255,.88)}
+    .footer-contact{display:flex;flex-direction:column;gap:.78rem}
+    .footer-contact-item{display:flex;align-items:flex-start;gap:.58rem}
+    .footer-contact-item svg{width:14px;height:14px;stroke:rgba(255,255,255,.3);flex-shrink:0;margin-top:3px}
+    .footer-contact-item span{font-size:.85rem;color:rgba(255,255,255,.38);line-height:1.5}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:1.8rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+    .footer-copy{font-size:.76rem;color:rgba(255,255,255,.2);font-family:'Space Mono',monospace}
+    .footer-reg{font-size:.72rem;color:rgba(255,255,255,.14);font-family:'Space Mono',monospace}
 
-    .mission-pillars { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 0.9rem; }
-    .pillar {
-      display: flex; gap: 1rem; align-items: flex-start; padding: 1.1rem 1.4rem;
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      backdrop-filter: var(--glass-blur-sm); -webkit-backdrop-filter: var(--glass-blur-sm);
-      box-shadow: var(--glass-shadow); border-radius: 14px; transition: all 0.2s;
+    /* ════ CHATBOT ════ */
+    .chatbot-fab{
+      position:fixed;bottom:2rem;right:2rem;z-index:500;
+      width:56px;height:56px;border-radius:50%;
+      background:var(--p);border:2px solid rgba(255,255,255,.22);
+      box-shadow:0 8px 32px rgba(92,10,46,.32);
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;transition:transform .2s,box-shadow .2s;
     }
-    .pillar:hover { background: var(--glass-bg-heavy); transform: translateX(4px); box-shadow: 0 12px 36px rgba(224,123,42,0.12); }
-    .pillar-icon {
-      width: 40px; height: 40px; border-radius: 10px; background: var(--soil);
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    .chatbot-fab:hover{transform:scale(1.08);box-shadow:0 14px 40px rgba(92,10,46,.42)}
+    .chatbot-fab svg{width:24px;height:24px;stroke:#fff}
+    .chat-notif{position:absolute;top:-3px;right:-3px;width:16px;height:16px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
+    .chat-notif span{font-size:.56rem;font-weight:900;color:var(--p);font-family:'Space Mono',monospace}
+    .chatbot-panel{
+      position:fixed;bottom:6.2rem;right:2rem;z-index:499;
+      width:355px;
+      background:var(--gh);
+      backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+      border:1px solid var(--gborder);
+      border-radius:24px;
+      box-shadow:0 24px 72px rgba(92,10,46,.20);
+      display:flex;flex-direction:column;overflow:hidden;
+      transform:scale(.92) translateY(14px);opacity:0;pointer-events:none;
+      transition:transform .28s cubic-bezier(.34,1.56,.64,1),opacity .22s;
     }
-    .pillar-icon svg { width: 20px; height: 20px; }
-    .pillar-title { font-weight: 900; font-size: 0.95rem; color: var(--soil); margin-bottom: 0.2rem; }
-    .pillar-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+    .chatbot-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+    .chat-header{display:flex;align-items:center;justify-content:space-between;padding:1.05rem 1.25rem;background:var(--p)}
+    .chat-header-left{display:flex;align-items:center;gap:.58rem}
+    .chat-avatar{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.17);display:flex;align-items:center;justify-content:center}
+    .chat-avatar svg{width:17px;height:17px;stroke:#fff}
+    .chat-name{font-weight:900;font-size:.86rem;color:#fff;line-height:1}
+    .chat-status{font-size:.63rem;color:rgba(255,255,255,.52);display:flex;align-items:center;gap:.28rem;margin-top:.1rem}
+    .chat-status-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite}
+    .chat-close{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5);padding:4px;border-radius:6px;transition:color .2s}
+    .chat-close:hover{color:#fff}
+    .chat-messages{flex:1;padding:1rem;display:flex;flex-direction:column;gap:.7rem;overflow-y:auto;max-height:310px;min-height:190px;scrollbar-width:thin;scrollbar-color:rgba(92,10,46,.15) transparent}
+    .chat-msg{display:flex;flex-direction:column;max-width:86%}
+    .chat-msg.bot{align-self:flex-start}
+    .chat-msg.user{align-self:flex-end}
+    .chat-bubble{padding:.68rem .92rem;border-radius:16px;font-size:.84rem;line-height:1.55;font-weight:400}
+    .chat-msg.bot .chat-bubble{background:rgba(92,10,46,.07);color:var(--pd);border-radius:4px 16px 16px 16px;border:1px solid rgba(92,10,46,.09)}
+    .chat-msg.user .chat-bubble{background:var(--p);color:#fff;border-radius:16px 4px 16px 16px}
+    .chat-time{font-size:.6rem;color:var(--muted);margin-top:.22rem;font-family:'Space Mono',monospace}
+    .chat-msg.user .chat-time{text-align:right}
+    .chat-typing{display:flex;gap:.3rem;align-items:center;padding:.68rem .92rem;background:rgba(92,10,46,.07);border-radius:4px 16px 16px 16px;width:fit-content;border:1px solid rgba(92,10,46,.09)}
+    .chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:bounce .9s ease-in-out infinite}
+    .chat-typing span:nth-child(2){animation-delay:.15s}
+    .chat-typing span:nth-child(3){animation-delay:.3s}
+    .chat-input-wrap{display:flex;gap:.55rem;padding:.85rem .95rem;border-top:1px solid rgba(92,10,46,.07);background:rgba(255,255,255,.62)}
+    .chat-input{flex:1;border:1.5px solid rgba(92,10,46,.11);background:rgba(255,255,255,.88);border-radius:12px;padding:.58rem .88rem;font-size:.84rem;font-family:'Nunito',sans-serif;color:var(--pd);outline:none;transition:border-color .2s}
+    .chat-input:focus{border-color:var(--p)}
+    .chat-input::placeholder{color:var(--muted)}
+    .chat-send{width:36px;height:36px;border-radius:11px;background:var(--p);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,transform .15s;flex-shrink:0}
+    .chat-send:hover{background:var(--pm);transform:scale(1.06)}
+    .chat-send svg{width:15px;height:15px;stroke:#fff}
 
-    .mission-visual { position: relative; }
-    .mission-img-wrap {
-      width: 100%; aspect-ratio: 4/5;
-      background: linear-gradient(160deg, var(--bark) 0%, var(--amber) 100%);
-      border-radius: 24px 80px 24px 24px; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 24px 64px rgba(224,123,42,0.2);
-    }
-    .mission-img-inner {
-      width: 85%; height: 85%;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 16px 60px 16px 16px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
-    }
-    .mission-quote-mark {
-      font-family: 'Playfair Display', serif; font-size: 8rem;
-      color: rgba(245,200,66,0.22); line-height: 0.8; font-weight: 900;
-    }
-    .mission-quote {
-      font-family: 'Playfair Display', serif; font-size: 1.3rem; font-style: italic;
-      color: rgba(253,246,236,0.92); text-align: center; padding: 0 2rem; line-height: 1.5;
-    }
-    .mission-quote-author {
-      font-family: 'Space Mono', monospace; font-size: 0.72rem;
-      color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase;
-    }
-    .mission-badge {
-      position: absolute; bottom: -18px; right: -18px; width: 110px; height: 110px;
-      background: var(--gold); border-radius: 50%; border: 6px solid var(--white);
-      display: flex; align-items: center; justify-content: center; flex-direction: column;
-      font-family: 'Space Mono', monospace;
-      box-shadow: 0 8px 24px rgba(245,200,66,0.4);
-    }
-    .mission-badge-year { font-size: 0.62rem; color: var(--bark); }
-    .mission-badge-est  { font-size: 1.15rem; font-weight: 700; color: var(--bark); }
+    /* ════ ANIMATIONS ════ */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 
-    /* ═══════════════════════════════
-       PROGRAMS — glass on dark
-    ═══════════════════════════════ */
-    .programs { background: var(--soil); padding: 8rem 3rem; position: relative; overflow: hidden; }
-    .programs::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 80% 20%, rgba(224,123,42,0.08) 0%, transparent 60%),
-                  radial-gradient(ellipse 40% 40% at 20% 80%, rgba(76,175,125,0.06) 0%, transparent 55%);
-      pointer-events: none;
-    }
-    .programs-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; position: relative; }
-    .programs-header .section-title { color: rgba(253,246,236,0.95); }
-    .programs-header .section-label { color: var(--gold); }
-    .programs-header .section-label::before { background: var(--gold); }
-    .program-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; position: relative; }
-    .program-card {
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-      border-radius: 22px; padding: 2.5rem 2rem;
-      position: relative; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
-    }
-    .program-card:hover {
-      transform: translateY(-7px);
-      background: rgba(255,255,255,0.09);
-      box-shadow: 0 20px 56px rgba(0,0,0,0.3);
-    }
-    .program-card-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-    .program-card:nth-child(1) .program-card-accent { background: var(--amber); }
-    .program-card:nth-child(2) .program-card-accent { background: var(--leaf); }
-    .program-card:nth-child(3) .program-card-accent { background: var(--gold); }
-    .program-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
-    .program-icon svg { width: 26px; height: 26px; }
-    .program-card:nth-child(1) .program-icon { background: rgba(224,123,42,0.18); }
-    .program-card:nth-child(2) .program-icon { background: rgba(76,175,125,0.18); }
-    .program-card:nth-child(3) .program-icon { background: rgba(245,200,66,0.18); }
-    .program-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: rgba(253,246,236,0.96); margin-bottom: 0.8rem; line-height: 1.2; }
-    .program-desc { font-size: 0.9rem; line-height: 1.75; color: rgba(253,246,236,0.5); font-weight: 400; }
-    .program-link { margin-top: 2rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: gap 0.2s; }
-    .program-link:hover { gap: 0.9rem; }
-    .program-card:nth-child(1) .program-link { color: var(--amber); }
-    .program-card:nth-child(2) .program-link { color: var(--leaf); }
-    .program-card:nth-child(3) .program-link { color: var(--gold); }
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .rd1{transition-delay:.1s}.rd2{transition-delay:.22s}.rd3{transition-delay:.36s}
 
-    /* ═══════════════════════════════
-       STORIES — glass cards
-    ═══════════════════════════════ */
-    .stories { padding: 8rem 3rem; background: transparent; }
-    .stories-header { text-align: center; margin-bottom: 4rem; }
-    .story-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 1.5rem; }
-    .story-card {
-      border-radius: 22px; padding: 2.5rem; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s;
-    }
-    .story-card:hover { transform: translateY(-5px); }
-    .story-card-featured {
-      background: linear-gradient(150deg, rgba(76,175,125,0.82) 0%, rgba(45,110,80,0.9) 100%);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,0.25);
-      box-shadow: 0 16px 48px rgba(76,175,125,0.22);
-    }
-    .story-card-2 {
-      background: var(--glass-bg-heavy);
-      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-      border: 1px solid var(--glass-border);
-      box-shadow: var(--glass-shadow);
-    }
-    .story-card-3 {
-      background: rgba(26,15,0,0.82);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(245,200,66,0.12);
-      box-shadow: 0 16px 48px rgba(26,15,0,0.25);
-    }
-    .story-avatar { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
-    .story-avatar svg { width: 24px; height: 24px; }
-    .story-card-featured .story-avatar { background: rgba(255,255,255,0.2); }
-    .story-card-2 .story-avatar { background: rgba(224,123,42,0.12); }
-    .story-card-3 .story-avatar { background: rgba(245,200,66,0.15); }
-    .story-quote { font-family: 'Playfair Display', serif; font-size: 1.08rem; font-style: italic; line-height: 1.65; margin-bottom: 1.5rem; }
-    .story-card-featured .story-quote { color: rgba(255,255,255,0.93); font-size: 1.2rem; }
-    .story-card-2 .story-quote { color: var(--soil); }
-    .story-card-3 .story-quote { color: rgba(253,246,236,0.87); }
-    .story-name { font-weight: 900; font-size: 0.88rem; letter-spacing: 0.03em; }
-    .story-card-featured .story-name { color: white; }
-    .story-card-2 .story-name { color: var(--soil); }
-    .story-card-3 .story-name { color: var(--gold); }
-    .story-meta { font-size: 0.75rem; margin-top: 0.2rem; font-family: 'Space Mono', monospace; }
-    .story-card-featured .story-meta { color: rgba(255,255,255,0.52); }
-    .story-card-2 .story-meta { color: var(--muted); }
-    .story-card-3 .story-meta { color: rgba(245,200,66,0.48); }
+    /* ════ MOBILE ════ */
+    @media(max-width:768px){
+      nav{padding:.85rem 1.4rem}
+      .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:rgba(255,255,255,.96);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-bottom:1px solid rgba(92,10,46,.09);padding:.5rem 0}
+      .nav-links.open{display:flex}
+      .nav-links li{width:100%}
+      .nav-links a{display:block;padding:.8rem 1.4rem;font-size:.87rem;border-bottom:1px solid rgba(92,10,46,.05)}
+      .nav-links a::after{display:none}
+      .nav-cta{margin:.5rem 1.4rem!important;border-radius:12px!important;text-align:center;display:block!important}
+      .nav-burger{display:flex}
+      .nav-logo-sub{display:none}
 
-    /* ═══════════════════════════════
-       DONATE — glass widget on amber
-    ═══════════════════════════════ */
-    .donate-cta {
-      background: var(--amber); padding: 7rem 3rem;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
-      position: relative; overflow: hidden;
-    }
-    .donate-cta::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(26,15,0,0.035) 40px, rgba(26,15,0,0.035) 41px);
-      pointer-events: none;
-    }
-    .donate-cta-content { position: relative; }
-    .donate-cta .section-label { color: var(--soil); }
-    .donate-cta .section-label::before { background: var(--soil); }
-    .donate-cta .section-title { color: var(--soil); }
-    .donate-cta-body { margin-top: 1.2rem; font-size: 1.02rem; line-height: 1.8; color: rgba(26,15,0,0.7); font-weight: 400; }
+      .hero{grid-template-columns:1fr;padding:6rem 1.4rem 3rem;min-height:auto;gap:2.5rem}
+      .hero-body{max-width:100%}
+      .hero-visual{order:-1}
+      .hero-card-stack{width:100%;max-width:320px;height:340px;margin:0 auto}
+      .hero-card-back{width:254px;height:308px;left:42px}
+      .hero-card-front{width:234px;height:290px}
+      .card-stat-num{font-size:2.4rem}
+      .hero-badge{font-size:.65rem;padding:.6rem .82rem;right:-4px;bottom:0}
 
-    .donate-amounts {
-      position: relative; display: flex; flex-direction: column; gap: 1rem;
-      background: rgba(255,255,255,0.35);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.55);
-      border-radius: 24px; padding: 2rem;
-      box-shadow: 0 12px 40px rgba(26,15,0,0.12);
-    }
-    .amount-row { display: flex; gap: 0.8rem; }
-    .amount-btn {
-      flex: 1; padding: 0.9rem; border: 1.5px solid rgba(26,15,0,0.22);
-      background: rgba(255,255,255,0.5); border-radius: 12px;
-      font-family: 'Space Mono', monospace; font-size: 1rem;
-      font-weight: 700; color: var(--soil); cursor: pointer; transition: all 0.2s;
-    }
-    .amount-btn:hover, .amount-btn.active {
-      background: var(--soil); color: var(--gold); border-color: var(--soil);
-    }
-    .amount-custom {
-      width: 100%; padding: 0.9rem 1.2rem; border: 1.5px solid rgba(26,15,0,0.2);
-      background: rgba(255,255,255,0.6); border-radius: 12px; font-size: 1rem;
-      font-family: 'Nunito', sans-serif; color: var(--soil); outline: none; transition: border-color 0.2s;
-    }
-    .amount-custom:focus { border-color: var(--soil); background: rgba(255,255,255,0.8); }
-    .amount-custom::placeholder { color: rgba(26,15,0,0.38); }
-    .btn-donate {
-      width: 100%; background: var(--soil); color: var(--gold);
-      padding: 1.1rem; border-radius: 100px; font-weight: 900; font-size: 1rem;
-      font-family: 'Nunito', sans-serif; letter-spacing: 0.02em; border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-donate:hover { background: #0a0500; transform: translateY(-2px); }
-    .donate-secure {
-      text-align: center; font-size: 0.75rem; color: rgba(26,15,0,0.42);
-      font-family: 'Space Mono', monospace;
-      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
-    }
+      .mission{grid-template-columns:1fr;padding:4rem 1.4rem;gap:3rem}
+      .mission-visual{order:-1}
+      .mission-badge{bottom:-12px;right:-8px;width:82px;height:82px;border-width:4px}
 
-    /* ═══════════════════════════════
-       FOOTER
-    ═══════════════════════════════ */
-    footer { background: var(--soil); padding: 5rem 3rem 2.5rem; position: relative; }
-    footer::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(245,200,66,0.3), transparent);
-    }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
-    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 900; color: rgba(253,246,236,0.95); margin-bottom: 1rem; }
-    .footer-logo span { color: var(--amber); }
-    .footer-tagline { font-size: 0.92rem; line-height: 1.75; color: rgba(253,246,236,0.42); font-weight: 400; max-width: 280px; }
-    .footer-socials { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
-    .social-btn {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none; color: rgba(253,246,236,0.45); transition: all 0.2s;
-    }
-    .social-btn svg { width: 16px; height: 16px; }
-    .social-btn:hover { background: var(--amber); color: var(--soil); border-color: var(--amber); }
-    .footer-col-title { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
-    .footer-links a { font-size: 0.92rem; color: rgba(253,246,236,0.42); text-decoration: none; font-weight: 400; transition: color 0.2s; }
-    .footer-links a:hover { color: rgba(253,246,236,0.92); }
-    .footer-bottom { border-top: 1px solid rgba(253,246,236,0.07); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
-    .footer-copy { font-size: 0.8rem; color: rgba(253,246,236,0.27); font-family: 'Space Mono', monospace; }
-    .footer-reg  { font-size: 0.75rem; color: rgba(253,246,236,0.18); font-family: 'Space Mono', monospace; }
+      .programs{padding:4rem 1.4rem}
+      .programs-header{flex-direction:column;align-items:flex-start;gap:.8rem}
+      .program-cards{grid-template-columns:1fr}
 
-    /* ═══════════════════════════════
-       ANIMATIONS
-    ═══════════════════════════════ */
-    @keyframes fadeUp  { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
-    @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-    @keyframes float   { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
+      .goals{padding:4rem 1.4rem}
+      .goals-grid{grid-template-columns:1fr}
+      .vision-band{padding:3.5rem 1.4rem}
+      .vision-band-inner{grid-template-columns:1fr;gap:2.5rem}
 
-    .reveal { opacity:0; transform:translateY(32px); transition:opacity 0.7s, transform 0.7s; }
-    .reveal.visible { opacity:1; transform:translateY(0); }
-    .reveal-delay-1 { transition-delay:0.1s; }
-    .reveal-delay-2 { transition-delay:0.22s; }
-    .reveal-delay-3 { transition-delay:0.36s; }
+      .ai-section{grid-template-columns:1fr;padding:4rem 1.4rem;gap:3rem}
 
-    /* ═══════════════════════════════
-       MOBILE ≤ 768px
-    ═══════════════════════════════ */
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.4rem; }
-      .nav-links {
-        display: none; position: absolute; top: 100%; left: 0; right: 0;
-        flex-direction: column; gap: 0;
-        background: rgba(255,255,255,0.92);
-        backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-        border-bottom: 1px solid var(--glass-border);
-        padding: 0.5rem 0;
-      }
-      .nav-links.open { display: flex; }
-      .nav-links li { width: 100%; }
-      .nav-links a { display: block; padding: 0.85rem 1.4rem; font-size: 0.9rem; border-bottom: 1px solid rgba(224,123,42,0.08); }
-      .nav-links a::after { display: none; }
-      .nav-cta { margin: 0.6rem 1.4rem !important; border-radius: 12px !important; text-align: center; display: block !important; }
-      .nav-burger { display: flex; }
+      .donate{grid-template-columns:1fr;padding:4rem 1.4rem;gap:2.5rem}
+      .amount-row{gap:.45rem}
+      .amount-btn{padding:.75rem .3rem;font-size:.83rem}
 
-      .hero { grid-template-columns: 1fr; padding: 6rem 1.4rem 3rem; min-height: auto; gap: 2.5rem; }
-      .hero-body { max-width: 100%; }
-      .hero-visual { order: -1; }
-      .hero-card-stack { width: 100%; max-width: 320px; height: 340px; margin: 0 auto; }
-      .hero-card-back { width: 255px; height: 310px; left: 42px; }
-      .hero-card-front { width: 235px; height: 295px; }
-      .card-stat-num { font-size: 2.4rem; }
-      .hero-float-badge { font-size: 0.68rem; padding: 0.65rem 0.9rem; right: -4px; bottom: 0; }
+      footer{padding:3.5rem 1.4rem 2rem}
+      .footer-grid{grid-template-columns:1fr;gap:2.5rem}
+      .footer-bottom{flex-direction:column;align-items:flex-start}
 
-      .stats { grid-template-columns: 1fr 1fr; padding: 2.5rem 1.4rem; gap: 0.8rem; }
-      .stat-card { padding: 1.8rem 1rem; }
-      .stat-num { font-size: 2.4rem; }
-
-      .mission { grid-template-columns: 1fr; padding: 4rem 1.4rem; gap: 3rem; }
-      .mission-visual { order: -1; }
-      .mission-badge { bottom: -12px; right: -8px; width: 84px; height: 84px; border-width: 4px; }
-      .mission-badge-est { font-size: 1rem; }
-
-      .programs { padding: 4rem 1.4rem; }
-      .programs-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-      .program-cards { grid-template-columns: 1fr; }
-
-      .stories { padding: 4rem 1.4rem; }
-      .story-grid { grid-template-columns: 1fr; }
-
-      .donate-cta { grid-template-columns: 1fr; padding: 4rem 1.4rem; gap: 2.5rem; }
-      .donate-amounts { padding: 1.5rem; }
-      .amount-row { gap: 0.5rem; }
-      .amount-btn { padding: 0.8rem 0.4rem; font-size: 0.85rem; }
-
-      footer { padding: 3.5rem 1.4rem 2rem; }
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-      .footer-bottom { flex-direction: column; align-items: flex-start; }
-    }
-
-    @media (max-width: 420px) {
-      .footer-grid { grid-template-columns: 1fr; }
-      .hero-card-stack { max-width: 290px; height: 310px; }
-      .hero-card-back { width: 230px; height: 275px; left: 38px; }
-      .hero-card-front { width: 215px; height: 262px; }
+      .chatbot-panel{width:calc(100vw - 2.8rem);right:1.4rem}
+      .chatbot-fab{bottom:1.5rem;right:1.5rem}
     }
   </style>
 </head>
 <body>
 
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-  <!-- NAV -->
-  <nav id="mainNav">
-    <div class="nav-logo">Roots <span>&</span> Wings</div>
-    <button class="nav-burger" id="burger" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#mission">About</a></li>
-      <li><a href="#programs">Programs</a></li>
-      <li><a href="#stories">Stories</a></li>
-      <li><a href="#donate">Donate</a></li>
-      <li><a href="#donate" class="nav-cta">Get Involved</a></li>
-    </ul>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-grain"></div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">Empowering Youth Since 2009</p>
-      <h1 class="hero-title">Every child<br/>deserves to<br/><em>soar.</em></h1>
-      <p class="hero-body">We give underprivileged youth the roots to stand firm and the wings to rise — through mentorship, education, and unwavering community.</p>
-      <div class="hero-actions">
-        <a href="#donate" class="btn-primary">Donate Now</a>
-        <a href="#stories" class="btn-ghost">
-          Read Stories
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
+<!-- ══ NAV ══ -->
+<nav id="mainNav">
+  <a class="nav-logo" href="#">
+    <img src="https://i.imgur.com/cQkGRvN.jpeg" alt="HGY Mission"/>
+    <div class="nav-logo-text">
+      <span class="nav-logo-abbr">HGY Mission</span>
+      <span class="nav-logo-sub">Holy Ground of Yahweh</span>
     </div>
-    <div class="hero-visual">
-      <div class="hero-card-stack">
-        <div class="hero-card hero-card-back">
-          <div class="hero-card-back-text">Building<br/>Tomorrow's<br/>Leaders.</div>
-        </div>
-        <div class="hero-card hero-card-front">
-          <div class="card-dots"><span></span><span></span><span></span></div>
-          <div>
-            <div class="card-stat"><div class="card-stat-num">12k+</div><div class="card-stat-label">Lives Changed</div></div>
-            <div class="card-stat" style="margin-top:1.2rem;"><div class="card-stat-num">94%</div><div class="card-stat-label">Graduation Rate</div></div>
-          </div>
-        </div>
-        <div class="hero-float-badge">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          2,400 mentors<br/>active this month
-        </div>
-      </div>
-    </div>
-  </section>
+  </a>
+  <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#mission">About</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#goals">Our Goals</a></li>
+    <li><a href="#donate">Give</a></li>
+    <li><a href="#donate" class="nav-cta">Take Action</a></li>
+  </ul>
+</nav>
 
-  <!-- MARQUEE -->
-  <div class="marquee-wrap" aria-hidden="true">
-    <div class="marquee-track">
-      <span class="marquee-item">Education for All <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">12,000 Lives Changed <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">47 Communities Reached <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">Mentorship Programs <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">Scholarship Fund <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">After-School Centers <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">Digital Skills Training <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">Education for All <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">12,000 Lives Changed <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">47 Communities Reached <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">Mentorship Programs <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">Scholarship Fund <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">After-School Centers <span class="marquee-sep">&#x2736;</span></span>
-      <span class="marquee-item">Digital Skills Training <span class="marquee-sep">&#x2736;</span></span>
-    </div>
-  </div>
-
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stat-card reveal"><div class="stat-num">12<span>k+</span></div><div class="stat-label">Youth Supported</div></div>
-    <div class="stat-card reveal reveal-delay-1"><div class="stat-num">47</div><div class="stat-label">Communities</div></div>
-    <div class="stat-card reveal reveal-delay-2"><div class="stat-num">94<span>%</span></div><div class="stat-label">Graduation Rate</div></div>
-    <div class="stat-card reveal reveal-delay-3"><div class="stat-num">2.4<span>k</span></div><div class="stat-label">Active Mentors</div></div>
-  </div>
-
-  <!-- MISSION -->
-  <section class="mission" id="mission">
-    <div>
-      <p class="section-label reveal">Our Mission</p>
-      <h2 class="section-title reveal reveal-delay-1">Ground them in values.<br/>Lift them to their potential.</h2>
-      <p class="section-body reveal reveal-delay-2">Roots &amp; Wings believes that circumstance should never dictate destiny. We work in under-resourced communities to remove barriers to education, connect young people with transformative mentors, and build the confidence every child deserves.</p>
-      <div class="mission-pillars">
-        <div class="pillar reveal reveal-delay-1">
-          <div class="pillar-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          </div>
-          <div>
-            <div class="pillar-title">Education Access</div>
-            <div class="pillar-desc">Scholarships, tutoring centres, and learning materials for every child in our network.</div>
-          </div>
-        </div>
-        <div class="pillar reveal reveal-delay-2">
-          <div class="pillar-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div>
-            <div class="pillar-title">Mentorship Network</div>
-            <div class="pillar-desc">Over 2,400 vetted professionals who guide and champion our youth one-on-one.</div>
-          </div>
-        </div>
-        <div class="pillar reveal reveal-delay-3">
-          <div class="pillar-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-          </div>
-          <div>
-            <div class="pillar-title">Skills for Tomorrow</div>
-            <div class="pillar-desc">Digital literacy, coding, and entrepreneurship workshops preparing youth for the modern world.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="mission-visual reveal">
-      <div class="mission-img-wrap">
-        <div class="mission-img-inner">
-          <div class="mission-quote-mark">"</div>
-          <p class="mission-quote">The best investment you can make is in a child who has been told they don't matter.</p>
-          <p class="mission-quote-author">— Amara Osei, Founder</p>
-        </div>
-      </div>
-      <div class="mission-badge"><span class="mission-badge-year">est.</span><span class="mission-badge-est">2009</span></div>
-    </div>
-  </section>
-
-  <!-- PROGRAMS -->
-  <section class="programs" id="programs">
-    <div class="programs-header reveal">
-      <div>
-        <p class="section-label">What We Do</p>
-        <h2 class="section-title">Our Programs</h2>
-      </div>
-      <a href="#" class="btn-ghost" style="color:rgba(253,246,236,0.4);font-size:0.85rem;">
-        View all
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Holy Ground of Yahweh Mission</p>
+    <h1 class="hero-title">Standing for the<br/>voiceless.<br/><em>Restoring dignity.</em></h1>
+    <p class="hero-body">HGY Mission is a faith-driven human rights organisation fighting for the weak, the marginalised, and the defenceless — because every life is sacred and every person deserves justice.</p>
+    <div class="hero-actions">
+      <a href="#donate" class="btn-primary">Support the Mission</a>
+      <a href="#goals" class="btn-ghost">
+        Our Vision
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
-    <div class="program-cards">
-      <div class="program-card reveal">
-        <div class="program-card-accent"></div>
-        <div class="program-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="10" x2="15" y2="10"/><line x1="9" y1="14" x2="13" y2="14"/></svg>
-        </div>
-        <h3 class="program-name">Roots Scholars</h3>
-        <p class="program-desc">Full-cycle scholarship program covering tuition, books, transport, and meals for academically promising youth from households below the poverty line.</p>
-        <a href="#" class="program-link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card-stack">
+      <div class="hero-card hero-card-back">
+        <div class="hero-card-back-text">Justice is<br/>not charity.<br/>It's a right.</div>
       </div>
-      <div class="program-card reveal reveal-delay-1">
-        <div class="program-card-accent"></div>
-        <div class="program-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--leaf)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <div class="hero-card hero-card-front">
+        <div class="card-dots"><span></span><span></span><span></span></div>
+        <div>
+          <div class="card-stat">
+            <div class="card-stat-num">18</div>
+            <div class="card-stat-label">Target Nations</div>
+          </div>
+          <div class="card-stat" style="margin-top:1.1rem">
+            <div class="card-stat-num">2026</div>
+            <div class="card-stat-label">Launch Year</div>
+          </div>
         </div>
-        <h3 class="program-name">Wings Mentorship</h3>
-        <p class="program-desc">Structured 12-month one-on-one mentorship pairing young people aged 13–21 with experienced professionals, entrepreneurs, and community leaders.</p>
-        <a href="#" class="program-link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
-      <div class="program-card reveal reveal-delay-2">
-        <div class="program-card-accent"></div>
-        <div class="program-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <h3 class="program-name">FutureForge</h3>
-        <p class="program-desc">Intensive 8-week digital skills bootcamps covering web development, graphic design, and financial literacy — with job placement support on completion.</p>
-        <a href="#" class="program-link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <div class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--p)" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Faith-driven<br/>human rights
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- STORIES -->
-  <section class="stories" id="stories">
-    <div class="stories-header">
-      <p class="section-label reveal" style="justify-content:center;">Real Impact</p>
-      <h2 class="section-title reveal reveal-delay-1">Voices from our community</h2>
-    </div>
-    <div class="story-grid">
-      <div class="story-card story-card-featured reveal">
-        <div class="story-avatar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <p class="story-quote">"Roots &amp; Wings didn't just pay for my school — they believed in me when no one else did. I started my own tech company at 23. I think about that every single day."</p>
-        <div class="story-name">Chidera Nnaji</div>
-        <div class="story-meta">Roots Scholar '18 · Founder, Stackr Labs</div>
-      </div>
-      <div class="story-card story-card-2 reveal reveal-delay-1">
-        <div class="story-avatar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-        </div>
-        <p class="story-quote">"My mentor showed me that my neighbourhood was not my ceiling. I'm now a first-generation university student studying medicine."</p>
-        <div class="story-name">Layla Hassan</div>
-        <div class="story-meta">Wings Mentee '21 · Medical Student</div>
-      </div>
-      <div class="story-card story-card-3 reveal reveal-delay-2">
-        <div class="story-avatar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        </div>
-        <p class="story-quote">"FutureForge gave me skills I use every day. Six months later I had my first freelance client. A year later I was making more than my parents combined."</p>
-        <div class="story-name">Marcus Oduya</div>
-        <div class="story-meta">FutureForge '22 · Freelance Designer</div>
-      </div>
-    </div>
-  </section>
+<!-- ══ MARQUEE ══ -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Human Rights Advocacy <span class="msep">✦</span></span>
+    <span class="marquee-item">Faith in Action <span class="msep">✦</span></span>
+    <span class="marquee-item">Defending the Weak <span class="msep">✦</span></span>
+    <span class="marquee-item">Free Legal Aid <span class="msep">✦</span></span>
+    <span class="marquee-item">Safe Haven Network <span class="msep">✦</span></span>
+    <span class="marquee-item">Community Protection <span class="msep">✦</span></span>
+    <span class="marquee-item">Youth Rights Education <span class="msep">✦</span></span>
+    <span class="marquee-item">Human Rights Advocacy <span class="msep">✦</span></span>
+    <span class="marquee-item">Faith in Action <span class="msep">✦</span></span>
+    <span class="marquee-item">Defending the Weak <span class="msep">✦</span></span>
+    <span class="marquee-item">Free Legal Aid <span class="msep">✦</span></span>
+    <span class="marquee-item">Safe Haven Network <span class="msep">✦</span></span>
+    <span class="marquee-item">Community Protection <span class="msep">✦</span></span>
+    <span class="marquee-item">Youth Rights Education <span class="msep">✦</span></span>
+  </div>
+</div>
 
-  <!-- DONATE -->
-  <section class="donate-cta" id="donate">
-    <div class="donate-cta-content reveal">
-      <p class="section-label">Make a Difference</p>
-      <h2 class="section-title">Your gift plants a seed that grows for generations.</h2>
-      <p class="donate-cta-body">Every dollar goes directly to scholarships, mentors, and programs. We keep our admin costs under 8% — one of the lowest in the sector.</p>
-    </div>
-    <div class="donate-amounts reveal reveal-delay-1">
-      <div class="amount-row">
-        <button class="amount-btn" onclick="selectAmount(this)">$25</button>
-        <button class="amount-btn active" onclick="selectAmount(this)">$50</button>
-        <button class="amount-btn" onclick="selectAmount(this)">$100</button>
+<!-- ══ MISSION ══ -->
+<section class="mission" id="mission">
+  <div>
+    <p class="section-label reveal">Our Mission</p>
+    <h2 class="section-title reveal rd1">Grounded in faith.<br/>Fuelled by justice.</h2>
+    <p class="section-body reveal rd2">HGY Mission — Holy Ground of Yahweh — was born from the conviction that faith without action is hollow. We stand in the gap for those stripped of their rights: the persecuted, the trafficked, the oppressed, and the forgotten — providing advocacy, legal support, and restoration.</p>
+    <div class="mission-pillars">
+      <div class="pillar reveal rd1">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="pillar-title">Human Rights Advocacy</div>
+          <div class="pillar-desc">We amplify the voices of the weak before courts, governments, and international bodies — ensuring no case goes unheard.</div>
+        </div>
       </div>
-      <div class="amount-row">
-        <button class="amount-btn" onclick="selectAmount(this)">$250</button>
-        <button class="amount-btn" onclick="selectAmount(this)">$500</button>
-        <button class="amount-btn" onclick="selectAmount(this)">$1,000</button>
+      <div class="pillar reveal rd2">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div>
+          <div class="pillar-title">Urgent Crisis Response</div>
+          <div class="pillar-desc">Rapid-response teams deployed to reach individuals and families in acute danger or displacement — because rights don't wait.</div>
+        </div>
       </div>
-      <input class="amount-custom" type="number" inputmode="numeric" placeholder="Or enter a custom amount..." />
-      <button class="btn-donate">
-        Donate &amp; Change a Life
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-      <p class="donate-secure">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Secure · Tax-deductible · No fees
-      </p>
+      <div class="pillar reveal rd3">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <div class="pillar-title">Community Restoration</div>
+          <div class="pillar-desc">Long-term rebuilding programmes that restore dignity, provide trauma counselling, and reintegrate survivors into society.</div>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
+  <div class="mission-visual reveal">
+    <div class="mission-img">
+      <div class="mission-img-inner">
+        <img src="https://i.imgur.com/cQkGRvN.jpeg" alt="HGY Mission"/>
+        <p class="mission-quote">"Speak up for those who cannot speak for themselves, for the rights of all who are destitute."</p>
+        <p class="mission-ref">Proverbs 31:8</p>
+      </div>
+    </div>
+    <div class="mission-badge">
+      <span class="mission-badge-yr">est.</span>
+      <span class="mission-badge-est">2012</span>
+    </div>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-grid">
+<!-- ══ PROGRAMS ══ -->
+<section class="programs" id="programs">
+  <div class="programs-glow"></div>
+  <div class="programs-header reveal">
+    <div>
+      <p class="section-label">What We Do</p>
+      <h2 class="section-title">Our Programs</h2>
+    </div>
+    <a href="#" style="color:rgba(255,255,255,.35);font-size:.8rem;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:.4rem">
+      View all
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="program-cards">
+    <div class="program-card reveal">
+      <div class="program-card-accent"></div>
+      <div class="program-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+      </div>
+      <h3 class="program-name">Legal Aid Initiative</h3>
+      <p class="program-desc">Free legal representation and documentation support for victims of human rights violations — from land grabbing to unlawful detention and trafficking.</p>
+      <a href="#" class="program-link">Learn more <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="program-card reveal rd1">
+      <div class="program-card-accent"></div>
+      <div class="program-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <h3 class="program-name">Safe Haven Network</h3>
+      <p class="program-desc">A network of vetted safe houses providing emergency shelter, psychological care, and reintegration pathways for at-risk individuals and families.</p>
+      <a href="#" class="program-link">Learn more <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="program-card reveal rd2">
+      <div class="program-card-accent"></div>
+      <div class="program-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      </div>
+      <h3 class="program-name">Youth Rights Academy</h3>
+      <p class="program-desc">Educating young people on their rights, civic responsibility, and non-violent advocacy — equipping a generation to stand for justice in their communities.</p>
+      <a href="#" class="program-link">Learn more <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GOALS & FUTURE ENDEAVOURS ══ -->
+<section class="goals" id="goals">
+  <div class="goals-header">
+    <p class="section-label reveal">Where We're Going</p>
+    <h2 class="section-title reveal rd1">Our goals &amp; future endeavours</h2>
+    <p class="section-body reveal rd2" style="max-width:580px;margin:1rem auto 0">We are a young organisation with a bold mandate. Here is where we are headed — the milestones we are building toward and the change we intend to make.</p>
+  </div>
+
+  <div class="goals-grid">
+    <!-- Goal 1 -->
+    <div class="goal-card reveal">
+      <div class="goal-card-accent"></div>
+      <div class="goal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+      </div>
+      <div class="goal-year">2026 — 2027</div>
+      <h3 class="goal-name">Establish Operations in 5 Nations</h3>
+      <p class="goal-desc">Launch ground-level teams, local partnerships, and reporting networks in our five priority countries across East and Central Africa.</p>
+    </div>
+    <!-- Goal 2 -->
+    <div class="goal-card reveal rd1">
+      <div class="goal-card-accent"></div>
+      <div class="goal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+      </div>
+      <div class="goal-year">2027</div>
+      <h3 class="goal-name">Open Our First Legal Aid Clinic</h3>
+      <p class="goal-desc">A permanent, walk-in legal aid centre staffed by pro-bono lawyers and paralegals providing free services to victims of rights violations.</p>
+    </div>
+    <!-- Goal 3 -->
+    <div class="goal-card reveal rd2">
+      <div class="goal-card-accent"></div>
+      <div class="goal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <div class="goal-year">2027 — 2028</div>
+      <h3 class="goal-name">Launch 3 Safe Haven Locations</h3>
+      <p class="goal-desc">Establish certified safe houses offering emergency shelter, trauma care, and 90-day restoration programmes for survivors of abuse and trafficking.</p>
+    </div>
+    <!-- Goal 4 -->
+    <div class="goal-card reveal">
+      <div class="goal-card-accent"></div>
+      <div class="goal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <div class="goal-year">2028</div>
+      <h3 class="goal-name">Train 500 Community Advocates</h3>
+      <p class="goal-desc">Build and certify a network of local community advocates trained in human rights law, documentation, and non-violent civic action.</p>
+    </div>
+    <!-- Goal 5 -->
+    <div class="goal-card reveal rd1">
+      <div class="goal-card-accent"></div>
+      <div class="goal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      </div>
+      <div class="goal-year">2028 — 2029</div>
+      <h3 class="goal-name">Youth Rights Academy in 10 Schools</h3>
+      <p class="goal-desc">Bring our rights education curriculum into secondary schools, reaching over 10,000 young people with the tools to understand and defend their rights.</p>
+    </div>
+    <!-- Goal 6 -->
+    <div class="goal-card reveal rd2">
+      <div class="goal-card-accent"></div>
+      <div class="goal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <div class="goal-year">2030</div>
+      <h3 class="goal-name">UN Consultative Status</h3>
+      <p class="goal-desc">Attain ECOSOC consultative status with the United Nations, amplifying our advocacy to the highest international human rights platforms.</p>
+    </div>
+  </div>
+
+  <!-- Vision band inside goals section -->
+  <div class="vision-band" style="border-radius:24px;margin-top:4rem">
+    <div class="vision-band-inner">
       <div>
-        <div class="footer-logo">Roots <span>&</span> Wings</div>
-        <p class="footer-tagline">Giving underprivileged youth the roots to stand firm and the wings to rise — one community at a time.</p>
-        <div class="footer-socials">
-          <a href="#" class="social-btn" aria-label="Twitter/X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-          <a href="#" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-          <a href="#" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
-          <a href="#" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <p class="section-label" style="color:rgba(255,255,255,.45)">Our 2030 Vision</p>
+        <p class="vision-statement">A world where <em>no one suffers alone</em> — and every violation of human dignity is met with swift, faithful action.</p>
+      </div>
+      <div class="vision-items">
+        <div class="vision-item">
+          <div class="vision-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div class="vision-item-title">Rights for All, Everywhere</div>
+            <div class="vision-item-desc">Expand to 18 nations with active human rights protection teams on the ground.</div>
+          </div>
+        </div>
+        <div class="vision-item">
+          <div class="vision-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20"/></svg>
+          </div>
+          <div>
+            <div class="vision-item-title">International Recognition</div>
+            <div class="vision-item-desc">Become a recognised voice at global human rights forums, policy tables, and UN bodies.</div>
+          </div>
+        </div>
+        <div class="vision-item">
+          <div class="vision-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <div class="vision-item-title">Zero Cost to Victims</div>
+            <div class="vision-item-desc">Sustain a fully donor-funded model so every service remains permanently free to those we serve.</div>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AI SECTION ══ -->
+<section class="ai-section">
+  <div>
+    <p class="section-label reveal">Innovation for Justice</p>
+    <h2 class="section-title reveal rd1">How AI will help us<br/>protect rights faster.</h2>
+    <p class="section-body reveal rd2">Technology is a powerful tool for justice. HGY Mission is building AI-assisted systems to detect violations, triage cases, and reach victims in remote regions — so every advocate on our team can help more people, faster.</p>
+  </div>
+  <div class="ai-card reveal rd1">
+    <div class="ai-badge">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      AI-Powered
+    </div>
+    <div class="ai-card-header">
+      <div class="ai-dot"></div>
       <div>
-        <div class="footer-col-title">Programs</div>
-        <ul class="footer-links">
-          <li><a href="#">Roots Scholars</a></li>
-          <li><a href="#">Wings Mentorship</a></li>
-          <li><a href="#">FutureForge</a></li>
-          <li><a href="#">After-School Hubs</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-col-title">Organisation</div>
-        <ul class="footer-links">
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Our Team</a></li>
-          <li><a href="#">Annual Reports</a></li>
-          <li><a href="#">Press &amp; Media</a></li>
-          <li><a href="#">Careers</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-col-title">Get Involved</div>
-        <ul class="footer-links">
-          <li><a href="#">Donate</a></li>
-          <li><a href="#">Volunteer</a></li>
-          <li><a href="#">Become a Mentor</a></li>
-          <li><a href="#">Corporate Partners</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
+        <div class="ai-card-title">HGY Intelligence Suite</div>
+        <div class="ai-card-sub">Planned · Launching 2027</div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2026 Roots &amp; Wings Foundation. All rights reserved.</span>
-      <span class="footer-reg">Registered NGO · EIN 00-0000000 · 501(c)(3)</span>
+    <div class="ai-items">
+      <div class="ai-item">
+        <div class="ai-item-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+        <div>
+          <div class="ai-item-title">Violation Detection</div>
+          <div class="ai-item-desc">AI will scan news, legal records, and reports across target nations to flag emerging human rights violations in real time.</div>
+        </div>
+      </div>
+      <div class="ai-item">
+        <div class="ai-item-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <div class="ai-item-title">Case Triage &amp; Matching</div>
+          <div class="ai-item-desc">Cases automatically triaged by urgency and matched to the most qualified advocate or legal expert in our network.</div>
+        </div>
+      </div>
+      <div class="ai-item">
+        <div class="ai-item-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div>
+          <div class="ai-item-title">24/7 Multilingual Assistant</div>
+          <div class="ai-item-desc">Our AI chatbot (below right) already provides guidance on rights, reporting, and emergency contacts — available now, free, in multiple languages.</div>
+        </div>
+      </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script>
-    // Cursor — desktop only
-    if (window.matchMedia('(pointer: fine)').matches) {
-      const dot = document.getElementById('cursorDot');
-      const ring = document.getElementById('cursorRing');
-      let mx=0,my=0,rx=0,ry=0;
-      document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
-      (function loop(){
-        dot.style.left=mx+'px'; dot.style.top=my+'px';
-        rx+=(mx-rx)*.14; ry+=(my-ry)*.14;
-        ring.style.left=rx+'px'; ring.style.top=ry+'px';
-        requestAnimationFrame(loop);
-      })();
-      document.querySelectorAll('a,button,.pillar').forEach(el=>{
-        el.addEventListener('mouseenter',()=>{ ring.style.width='52px'; ring.style.height='52px'; });
-        el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; });
-      });
-    }
+<!-- ══ DONATE ══ -->
+<section class="donate" id="donate">
+  <div class="donate-content">
+    <p class="section-label">Partner With Us</p>
+    <h2 class="section-title">Your gift builds the<br/>foundation for justice.</h2>
+    <p class="donate-body">We are just getting started — and your support makes everything possible. Fund our first legal clinic, our safe haven network, and the advocates who will defend thousands of lives.</p>
+  </div>
+  <div class="donate-widget reveal rd1">
+    <div class="amount-row">
+      <button class="amount-btn" onclick="selectAmt(this)">$25</button>
+      <button class="amount-btn active" onclick="selectAmt(this)">$50</button>
+      <button class="amount-btn" onclick="selectAmt(this)">$100</button>
+    </div>
+    <div class="amount-row">
+      <button class="amount-btn" onclick="selectAmt(this)">$250</button>
+      <button class="amount-btn" onclick="selectAmt(this)">$500</button>
+      <button class="amount-btn" onclick="selectAmt(this)">$1,000</button>
+    </div>
+    <input class="amount-input" type="number" inputmode="numeric" placeholder="Or enter a custom amount…"/>
+    <button class="btn-donate">
+      Give Now
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+    <p class="donate-note">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Secure · Tax-deductible · No fees
+    </p>
+  </div>
+</section>
 
-    // Nav scroll
-    window.addEventListener('scroll', ()=>{
-      document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 40);
-    }, {passive:true});
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">
+        <img src="https://i.imgur.com/cQkGRvN.jpeg" alt="HGY Mission"/>
+        <div>
+          <div class="footer-abbr">HGY Mission</div>
+          <div class="footer-full">Holy Ground of Yahweh</div>
+        </div>
+      </div>
+      <p class="footer-tagline">A faith-driven human rights organisation standing for the weak, the marginalised, and the forgotten — because every life is sacred.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" class="social-btn" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#3d0620"/></svg></a>
+        <a href="#" class="social-btn" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="#mission">About HGY</a></li>
+        <li><a href="#programs">Our Programs</a></li>
+        <li><a href="#goals">Our Goals</a></li>
+        <li><a href="#">Report a Violation</a></li>
+        <li><a href="#">Volunteer</a></li>
+        <li><a href="#donate">Donate</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact Us</div>
+      <div class="footer-contact">
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>HGY Mission HQ<br/>P.O. Box 0000, Nairobi, Kenya</span>
+        </div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.39 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>+254 700 000 000</span>
+        </div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>info@hgymission.org</span>
+        </div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span>www.hgymission.org</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Holy Ground of Yahweh Mission. All rights reserved.</span>
+    <span class="footer-reg">Registered NGO · 501(c)(3) · Charity No. 00000</span>
+  </div>
+</footer>
 
-    // Hamburger
-    const burger = document.getElementById('burger');
-    const navLinks = document.getElementById('navLinks');
-    burger.addEventListener('click', ()=>{
-      burger.classList.toggle('open');
-      navLinks.classList.toggle('open');
+<!-- ══ CHATBOT FAB ══ -->
+<button class="chatbot-fab" id="chatFab" aria-label="Open AI Assistant">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <div class="chat-notif"><span>AI</span></div>
+</button>
+
+<!-- ══ CHATBOT PANEL ══ -->
+<div class="chatbot-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div>
+        <div class="chat-name">HGY Assistant</div>
+        <div class="chat-status"><span class="chat-status-dot"></span>Online · AI-powered</div>
+      </div>
+    </div>
+    <button class="chat-close" id="chatClose" aria-label="Close">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot">
+      <div class="chat-bubble">Hello! I'm the HGY Mission AI assistant. I can help you learn about human rights, our programs and goals, how to report a violation, or how to get involved. How can I help you?</div>
+      <div class="chat-time">Just now</div>
+    </div>
+  </div>
+  <div class="chat-input-wrap">
+    <input class="chat-input" id="chatInput" type="text" placeholder="Ask about rights, programs, goals…" autocomplete="off"/>
+    <button class="chat-send" id="chatSend" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  /* Cursor */
+  if(window.matchMedia('(pointer:fine)').matches){
+    const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+    (function loop(){
+      dot.style.left=mx+'px';dot.style.top=my+'px';
+      rx+=(mx-rx)*.14;ry+=(my-ry)*.14;
+      ring.style.left=rx+'px';ring.style.top=ry+'px';
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a,button,.pillar,.program-card,.goal-card,.vision-item').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{ring.style.width='48px';ring.style.height='48px'});
+      el.addEventListener('mouseleave',()=>{ring.style.width='34px';ring.style.height='34px'});
     });
-    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=>{
-      burger.classList.remove('open');
-      navLinks.classList.remove('open');
-    }));
+  }
 
-    // Scroll reveal
-    const ro = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-    },{threshold:0.1});
-    document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+  /* Nav scroll */
+  window.addEventListener('scroll',()=>{
+    document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>40);
+  },{passive:true});
 
-    // Donate amounts
-    function selectAmount(btn){
-      document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelector('.amount-custom').value='';
-    }
-  </script>
+  /* Hamburger */
+  const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
+  burger.addEventListener('click',()=>{burger.classList.toggle('open');navLinks.classList.toggle('open')});
+  navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger.classList.remove('open');navLinks.classList.remove('open')}));
+
+  /* Reveal */
+  const ro=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+  },{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+  /* Donate amounts */
+  function selectAmt(btn){
+    document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelector('.amount-input').value='';
+  }
+
+  /* Chatbot */
+  const fab=document.getElementById('chatFab');
+  const panel=document.getElementById('chatPanel');
+  const closeBtn=document.getElementById('chatClose');
+  const msgBox=document.getElementById('chatMessages');
+  const input=document.getElementById('chatInput');
+  const sendBtn=document.getElementById('chatSend');
+
+  fab.addEventListener('click',()=>{panel.classList.toggle('open');const n=fab.querySelector('.chat-notif');if(n)n.style.display='none'});
+  closeBtn.addEventListener('click',()=>panel.classList.remove('open'));
+
+  const getTime=()=>new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+
+  function addMsg(text,role){
+    const wrap=document.createElement('div');
+    wrap.className=`chat-msg ${role}`;
+    const bubble=document.createElement('div');bubble.className='chat-bubble';bubble.textContent=text;
+    const time=document.createElement('div');time.className='chat-time';time.textContent=getTime();
+    wrap.appendChild(bubble);wrap.appendChild(time);
+    msgBox.appendChild(wrap);msgBox.scrollTop=msgBox.scrollHeight;
+  }
+
+  function showTyping(){
+    const wrap=document.createElement('div');wrap.className='chat-msg bot';wrap.id='typingWrap';
+    const t=document.createElement('div');t.className='chat-typing';
+    t.innerHTML='<span></span><span></span><span></span>';
+    wrap.appendChild(t);msgBox.appendChild(wrap);msgBox.scrollTop=msgBox.scrollHeight;
+  }
+  function removeTyping(){const t=document.getElementById('typingWrap');if(t)t.remove()}
+
+  async function sendMessage(){
+    const text=input.value.trim();if(!text)return;
+    input.value='';addMsg(text,'user');showTyping();sendBtn.disabled=true;
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-sonnet-4-20250514',
+          max_tokens:1000,
+          system:`You are the HGY Mission AI assistant — a compassionate, knowledgeable human rights advocate chatbot for Holy Ground of Yahweh Mission (HGY Mission). HGY is a faith-driven NGO fighting for human rights, advocating for the weak and marginalised. We are a new organisation working to establish: a Legal Aid Initiative, Safe Haven Network, Youth Rights Academy, and community advocate training. Our goals include operations in 5 nations by 2027, a legal aid clinic, 3 safe havens, training 500 advocates, and UN consultative status by 2030. Help users learn about human rights, report violations, volunteer, donate, or understand our programs and goals. Be warm, concise, and empowering. Respond in 2-4 sentences unless more detail is needed.`,
+          messages:[{role:'user',content:text}]
+        })
+      });
+      const data=await res.json();
+      removeTyping();
+      addMsg(data?.content?.[0]?.text||"I couldn't get a response. Please try again or email info@hgymission.org.",'bot');
+    }catch{
+      removeTyping();
+      addMsg("I'm having trouble connecting. Please try again or reach us at info@hgymission.org.",'bot');
+    }finally{sendBtn.disabled=false}
+  }
+
+  sendBtn.addEventListener('click',sendMessage);
+  input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}});
+</script>
 </body>
 </html>
