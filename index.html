@@ -1380,5 +1380,19 @@ aiSendBtn.addEventListener('click',()=>aiSendMessage());
 aiInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();aiSendMessage()}});
 aiInput.addEventListener('input',()=>{aiInput.style.height='auto';aiInput.style.height=Math.min(aiInput.scrollHeight,120)+'px'});
 </script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+const map = L.map('realMap').setView([-13.1339, 27.8493], 5);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 18
+}).addTo(map);
+
+// Markers
+L.marker([-15.4167, 28.2833]).addTo(map).bindPopup("Lusaka - HQ");
+L.marker([-12.9683, 28.6366]).addTo(map).bindPopup("Kitwe - Outreach");
+</script>
 </body>
 </html>
