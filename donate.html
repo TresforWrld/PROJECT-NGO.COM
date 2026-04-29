@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Donate — HGY Mission</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
+
+<style>
+:root{
+  --p:#5c0a2e;
+  --pd:#3d0620;
+  --pl:#a3315a;
+  --bg:#f7f2f5;
+  --text:#1e0210;
+  --muted:#7a5068;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+/* NAV */
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1rem 2rem;
+  background:#fff;
+  border-bottom:1px solid rgba(0,0,0,.05);
+}
+
+nav a{
+  text-decoration:none;
+  color:var(--p);
+  font-weight:700;
+}
+
+/* HERO */
+.hero{
+  padding:5rem 2rem 3rem;
+  text-align:center;
+}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:2.8rem;
+  color:var(--pd);
+}
+
+.hero p{
+  margin-top:1rem;
+  color:var(--muted);
+  max-width:600px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* COMING SOON BADGE */
+.badge{
+  display:inline-block;
+  margin-top:1.5rem;
+  background:var(--p);
+  color:#fff;
+  padding:.5rem 1.2rem;
+  border-radius:999px;
+  font-weight:800;
+  letter-spacing:.05em;
+}
+
+/* GRID */
+.section{
+  padding:3rem 2rem;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:1.5rem;
+  margin-top:2rem;
+}
+
+.card{
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.05);
+  transition:transform .2s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+
+.card-body{
+  padding:1.2rem;
+}
+
+.card-title{
+  font-weight:800;
+  color:var(--pd);
+  margin-bottom:.5rem;
+}
+
+.card-text{
+  font-size:.9rem;
+  color:var(--muted);
+}
+
+/* CTA */
+.cta{
+  text-align:center;
+  padding:3rem 2rem;
+}
+
+.btn{
+  display:inline-block;
+  background:var(--p);
+  color:#fff;
+  padding:.9rem 2rem;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:800;
+  transition:background .2s, transform .15s;
+}
+
+.btn:hover{
+  background:var(--pl);
+  transform:translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <strong>HGY Mission</strong>
+  <a href="index.html">← Back Home</a>
+</nav>
+
+<section class="hero">
+  <h1>Support the Mission</h1>
+  <div class="badge">DONATIONS COMING SOON</div>
+  <p>
+    We are preparing a secure and transparent donation system that will allow you
+    to directly support vulnerable communities across Africa. Your contribution
+    will go beyond charity — it will create real, measurable impact.
+  </p>
+</section>
+
+<section class="section">
+  <h2 style="text-align:center;">What Your Support Will Do</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1526256262350-7da7584cf5eb">
+      <div class="card-body">
+        <div class="card-title">Protect the Vulnerable</div>
+        <div class="card-text">
+          Provide legal aid, protection, and support for individuals facing abuse,
+          injustice, and neglect.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d">
+      <div class="card-body">
+        <div class="card-title">Community Outreach</div>
+        <div class="card-text">
+          Fund outreach programs that deliver essential services, education, and
+          awareness in underserved areas.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1469571486292-b53601010376">
+      <div class="card-body">
+        <div class="card-title">Emergency Response</div>
+        <div class="card-text">
+          Enable rapid response to crises, ensuring help reaches those in urgent
+          need without delay.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta">
+  <p style="margin-bottom:1.2rem;color:var(--muted);">
+    Donations will be available soon. Stay connected and be part of the change.
+  </p>
+
+  <a href="index.html" class="btn">Return to Home</a>
+</section>
+
+</body>
+</html>
