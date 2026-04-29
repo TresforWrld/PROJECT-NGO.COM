@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard — HGY Mission</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Playfair+Display:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --p:#5c0a2e;--pd:#3d0620;--pm:#7a1040;--pl:#a3315a;
+      --w:#fff;--bg:#f7f2f5;--text:#1e0210;--muted:#7a5068;
+      --border:rgba(92,10,46,0.1);--card:#fff;
+      --sidebar:220px;
+      --success:#16a34a;--warning:#d97706;--danger:#dc2626;--info:#2563eb;
+    }
+    html,body{height:100%;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+
+    /* LOGIN SCREEN */
+    .login-screen{position:fixed;inset:0;z-index:999;background:var(--pd);display:flex;align-items:center;justify-content:center;padding:1.5rem}
+    .login-screen.hidden{display:none}
+    .login-box{background:#fff;border-radius:24px;padding:2.8rem;width:100%;max-width:420px;box-shadow:0 32px 80px rgba(0,0,0,.3)}
+    .login-logo{display:flex;align-items:center;gap:.75rem;margin-bottom:2rem}
+    .login-logo img{width:42px;height:42px;border-radius:8px;object-fit:contain}
+    .login-logo-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;color:var(--p)}
+    .login-logo-sub{font-size:.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+    .login-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--pd);margin-bottom:.4rem}
+    .login-sub{font-size:.88rem;color:var(--muted);margin-bottom:1.8rem}
+    .login-label{display:block;font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem}
+    .login-input{width:100%;padding:.78rem 1rem;border:1.5px solid rgba(92,10,46,.12);border-radius:11px;font-family:'Nunito',sans-serif;font-size:.9rem;color:var(--text);outline:none;transition:border-color .2s;margin-bottom:1rem;background:#faf7f9}
+    .login-input:focus{border-color:var(--p)}
+    .login-btn{width:100%;background:var(--p);color:#fff;padding:1rem;border-radius:100px;font-weight:900;font-size:.92rem;font-family:'Nunito',sans-serif;border:none;cursor:pointer;margin-top:.5rem;transition:background .2s}
+    .login-btn:hover{background:var(--pm)}
+    .login-err{color:#dc2626;font-size:.82rem;margin-bottom:.8rem;display:none;padding:.5rem .8rem;background:#fef2f2;border-radius:8px;border:1px solid #fecaca}
+
+    /* LAYOUT */
+    .dashboard{display:flex;height:100vh;overflow:hidden}
+
+    /* SIDEBAR */
+    .sidebar{width:var(--sidebar);background:var(--pd);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;padding-bottom:1.5rem}
+    .sidebar-brand{padding:1.5rem 1.3rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.06)}
+    .sidebar-brand-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+    .sidebar-brand-logo img{width:34px;height:34px;border-radius:7px;object-fit:contain}
+    .sidebar-brand-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:900;color:#fff}
+    .sidebar-brand-sub{font-size:.52rem;font-weight:700;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:.05em}
+    .sidebar-section{padding:.9rem 1rem .3rem;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22)}
+    .sidebar-nav{list-style:none;padding:0 .6rem}
+    .sidebar-nav li{margin:.18rem 0}
+    .sidebar-link{display:flex;align-items:center;gap:.65rem;padding:.65rem .85rem;border-radius:10px;text-decoration:none;font-size:.83rem;font-weight:700;color:rgba(255,255,255,.42);transition:background .2s,color .2s;cursor:pointer;border:none;background:none;width:100%;text-align:left}
+    .sidebar-link svg{width:16px;height:16px;stroke:currentColor;flex-shrink:0}
+    .sidebar-link:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.82)}
+    .sidebar-link.active{background:rgba(255,255,255,.12);color:#fff}
+    .sidebar-badge{margin-left:auto;background:var(--pl);color:#fff;border-radius:100px;padding:.15rem .55rem;font-size:.58rem;font-weight:700;font-family:'Space Mono',monospace;min-width:20px;text-align:center}
+    .sidebar-footer{margin-top:auto;padding:.9rem 1rem 0;border-top:1px solid rgba(255,255,255,.06);margin-top:1.5rem}
+    .sidebar-logout{display:flex;align-items:center;gap:.65rem;padding:.6rem .85rem;border-radius:10px;color:rgba(255,255,255,.3);font-size:.82rem;font-weight:700;cursor:pointer;background:none;border:none;width:100%;transition:color .2s,background .2s}
+    .sidebar-logout:hover{color:rgba(255,255,255,.7);background:rgba(255,255,255,.05)}
+    .sidebar-logout svg{width:15px;height:15px;stroke:currentColor}
+
+    /* MAIN */
+    .main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+    .topbar{background:#fff;padding:.85rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:sticky;top:0;z-index:10}
+    .topbar-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--pd)}
+    .topbar-right{display:flex;align-items:center;gap:1rem}
+    .topbar-admin{font-size:.8rem;color:var(--muted);font-weight:700}
+    .topbar-dot{width:8px;height:8px;border-radius:50%;background:#4ade80}
+    .content{padding:2rem;flex:1}
+
+    /* VIEWS */
+    .view{display:none}
+    .view.active{display:block}
+
+    /* STATS ROW */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:2rem}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.4rem 1.6rem;position:relative;overflow:hidden}
+    .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+    .stat-card.blue::before{background:var(--info)}
+    .stat-card.green::before{background:var(--success)}
+    .stat-card.amber::before{background:var(--warning)}
+    .stat-card.rose::before{background:var(--p)}
+    .stat-label{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+    .stat-num{font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;color:var(--pd);line-height:1}
+    .stat-sub{font-size:.72rem;color:var(--muted);margin-top:.3rem}
+    .stat-icon{position:absolute;top:1.2rem;right:1.2rem;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+    .stat-icon svg{width:18px;height:18px}
+    .stat-card.blue .stat-icon{background:rgba(37,99,235,.08);stroke:var(--info)}
+    .stat-card.green .stat-icon{background:rgba(22,163,74,.08);stroke:var(--success)}
+    .stat-card.amber .stat-icon{background:rgba(217,119,6,.08);stroke:var(--warning)}
+    .stat-card.rose .stat-icon{background:rgba(92,10,46,.08);stroke:var(--p)}
+    .stat-card.blue .stat-icon svg{stroke:var(--info)}
+    .stat-card.green .stat-icon svg{stroke:var(--success)}
+    .stat-card.amber .stat-icon svg{stroke:var(--warning)}
+    .stat-card.rose .stat-icon svg{stroke:var(--p)}
+
+    /* TABLE CARD */
+    .table-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:1.5rem}
+    .table-card-header{padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+    .table-card-title{font-weight:900;font-size:.95rem;color:var(--pd)}
+    .table-card-sub{font-size:.78rem;color:var(--muted);margin-top:.1rem}
+    .table-actions{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+    .tbl-search{padding:.5rem .9rem;border:1.5px solid var(--border);border-radius:8px;font-family:'Nunito',sans-serif;font-size:.82rem;color:var(--text);outline:none;width:200px;transition:border-color .2s}
+    .tbl-search:focus{border-color:var(--p)}
+    .tbl-filter{padding:.5rem .9rem;border:1.5px solid var(--border);border-radius:8px;font-family:'Nunito',sans-serif;font-size:.82rem;color:var(--text);outline:none;background:#fff;cursor:pointer;appearance:none}
+    table{width:100%;border-collapse:collapse;font-size:.84rem}
+    thead{background:rgba(92,10,46,.03)}
+    th{padding:.8rem 1.2rem;text-align:left;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap;border-bottom:1px solid var(--border)}
+    td{padding:.88rem 1.2rem;border-bottom:1px solid rgba(92,10,46,.05);vertical-align:middle;color:var(--text)}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:rgba(92,10,46,.02)}
+    .badge{display:inline-block;padding:.22rem .7rem;border-radius:100px;font-size:.68rem;font-weight:700;font-family:'Space Mono',monospace;white-space:nowrap}
+    .badge-open{background:rgba(37,99,235,.1);color:var(--info)}
+    .badge-pending{background:rgba(217,119,6,.1);color:var(--warning)}
+    .badge-closed,.badge-approved{background:rgba(22,163,74,.1);color:var(--success)}
+    .badge-unread{background:rgba(92,10,46,.1);color:var(--p)}
+    .badge-read{background:rgba(92,10,46,.05);color:var(--muted)}
+    .badge-rejected{background:rgba(220,38,38,.1);color:var(--danger)}
+    .badge-emergency{background:rgba(220,38,38,.12);color:var(--danger)}
+    .row-actions{display:flex;gap:.4rem;align-items:center}
+    .act-btn{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s}
+    .act-btn svg{width:13px;height:13px;stroke:var(--muted)}
+    .act-btn:hover{border-color:var(--p);background:rgba(92,10,46,.06)}
+    .act-btn:hover svg{stroke:var(--p)}
+    .act-btn.danger:hover{border-color:var(--danger);background:rgba(220,38,38,.06)}
+    .act-btn.danger:hover svg{stroke:var(--danger)}
+    .act-btn.success:hover{border-color:var(--success);background:rgba(22,163,74,.06)}
+    .act-btn.success:hover svg{stroke:var(--success)}
+    .empty-state{text-align:center;padding:3.5rem 2rem;color:var(--muted)}
+    .empty-state svg{width:44px;height:44px;stroke:rgba(92,10,46,.15);margin-bottom:1rem}
+    .empty-state p{font-size:.88rem}
+    .loading-row{text-align:center;padding:2.5rem;color:var(--muted);font-size:.85rem}
+
+    /* DETAIL MODAL */
+    .modal-overlay{position:fixed;inset:0;z-index:700;background:rgba(61,6,32,.45);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:1.5rem}
+    .modal-overlay.open{display:flex}
+    .modal-box{background:#fff;border-radius:20px;width:100%;max-width:560px;max-height:88vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.2)}
+    .modal-header{padding:1.3rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:1}
+    .modal-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--pd)}
+    .modal-close{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s}
+    .modal-close:hover{border-color:var(--muted)}
+    .modal-close svg{width:14px;height:14px;stroke:var(--muted)}
+    .modal-body{padding:1.5rem}
+    .detail-row{margin-bottom:1.1rem}
+    .detail-label{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem}
+    .detail-val{font-size:.9rem;color:var(--text);line-height:1.6}
+    .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .modal-actions{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.7rem;flex-wrap:wrap}
+    .mbtn{padding:.62rem 1.3rem;border-radius:100px;font-weight:700;font-size:.83rem;font-family:'Nunito',sans-serif;cursor:pointer;border:none;transition:all .2s}
+    .mbtn-primary{background:var(--p);color:#fff}
+    .mbtn-primary:hover{background:var(--pm)}
+    .mbtn-success{background:var(--success);color:#fff}
+    .mbtn-danger{background:var(--danger);color:#fff}
+    .mbtn-outline{background:#fff;border:1.5px solid var(--border)!important;color:var(--muted);border:none}
+    .mbtn-outline:hover{border-color:var(--muted)!important;color:var(--text)}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:2rem;right:2rem;z-index:9999;background:var(--pd);color:#fff;padding:.82rem 1.4rem;border-radius:14px;font-size:.85rem;font-weight:700;box-shadow:0 12px 36px rgba(0,0,0,.2);transform:translateY(16px);opacity:0;transition:all .3s;pointer-events:none;max-width:320px}
+    .toast.show{transform:translateY(0);opacity:1}
+
+    /* OVERVIEW RECENT */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem}
+    .recent-list{list-style:none}
+    .recent-item{display:flex;align-items:flex-start;gap:.85rem;padding:.9rem 0;border-bottom:1px solid rgba(92,10,46,.05)}
+    .recent-item:last-child{border-bottom:none}
+    .recent-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .ri-ticket{background:rgba(37,99,235,.08)}
+    .ri-ticket svg{width:16px;height:16px;stroke:var(--info)}
+    .ri-app{background:rgba(92,10,46,.08)}
+    .ri-app svg{width:16px;height:16px;stroke:var(--p)}
+    .ri-msg{background:rgba(217,119,6,.08)}
+    .ri-msg svg{width:16px;height:16px;stroke:var(--warning)}
+    .recent-name{font-weight:700;font-size:.85rem;color:var(--pd)}
+    .recent-meta{font-size:.75rem;color:var(--muted);margin-top:.1rem}
+
+    /* SETTINGS */
+    .settings-section{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.6rem;margin-bottom:1.5rem}
+    .settings-section-title{font-weight:900;font-size:.92rem;color:var(--pd);margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+    .setting-row{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid rgba(92,10,46,.04)}
+    .setting-row:last-child{border-bottom:none}
+    .setting-name{font-weight:700;font-size:.88rem;color:var(--text)}
+    .setting-desc{font-size:.76rem;color:var(--muted);margin-top:.12rem}
+    .toggle{position:relative;width:42px;height:24px;flex-shrink:0}
+    .toggle input{opacity:0;width:0;height:0}
+    .toggle-slider{position:absolute;inset:0;background:#ddd;border-radius:100px;cursor:pointer;transition:background .2s}
+    .toggle-slider::before{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+    .toggle input:checked+.toggle-slider{background:var(--p)}
+    .toggle input:checked+.toggle-slider::before{transform:translateX(18px)}
+    .settings-input{width:100%;padding:.62rem .9rem;border:1.5px solid var(--border);border-radius:9px;font-family:'Nunito',sans-serif;font-size:.85rem;color:var(--text);outline:none;margin-top:.5rem;transition:border-color .2s}
+    .settings-input:focus{border-color:var(--p)}
+    .settings-save{background:var(--p);color:#fff;padding:.65rem 1.5rem;border-radius:100px;font-weight:700;font-size:.84rem;font-family:'Nunito',sans-serif;border:none;cursor:pointer;margin-top:1rem;transition:background .2s}
+    .settings-save:hover{background:var(--pm)}
+
+    /* PAGINATION */
+    .pagination{display:flex;align-items:center;justify-content:flex-end;gap:.4rem;padding:1rem 1.5rem;border-top:1px solid var(--border)}
+    .page-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:.78rem;font-weight:700;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .2s}
+    .page-btn:hover,.page-btn.active{background:var(--p);color:#fff;border-color:var(--p)}
+    .page-info{font-size:.76rem;color:var(--muted);margin-right:.5rem}
+
+    /* MOBILE */
+    @media(max-width:768px){
+      .sidebar{display:none}
+      .stats-row{grid-template-columns:1fr 1fr}
+      .two-col{grid-template-columns:1fr}
+      .content{padding:1.2rem}
+      .topbar{padding:.75rem 1.2rem}
+      .detail-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="https://i.imgur.com/44Vc2mf.png" alt="HGY Mission"/>
+      <div>
+        <div class="login-logo-name">HGY Mission</div>
+        <div class="login-logo-sub">Admin Portal</div>
+      </div>
+    </div>
+    <div class="login-title">Admin Access</div>
+    <div class="login-sub">Sign in with your administrator credentials to continue.</div>
+    <div class="login-err" id="loginErr">Incorrect username or password.</div>
+    <label class="login-label">Username</label>
+    <input class="login-input" id="loginUser" type="text" placeholder="admin" autocomplete="username"/>
+    <label class="login-label">Password</label>
+    <input class="login-input" id="loginPass" type="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" autocomplete="current-password"/>
+    <button class="login-btn" id="loginBtn">Sign In</button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboardWrap" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <a class="sidebar-brand-logo" href="index.html" target="_blank">
+        <img src="https://i.imgur.com/44Vc2mf.png" alt="HGY"/>
+        <div>
+          <div class="sidebar-brand-name">HGY Mission</div>
+          <div class="sidebar-brand-sub">Admin Panel</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="sidebar-section">Overview</div>
+    <ul class="sidebar-nav">
+      <li><button class="sidebar-link active" onclick="showView('overview',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </button></li>
+    </ul>
+
+    <div class="sidebar-section">Submissions</div>
+    <ul class="sidebar-nav">
+      <li><button class="sidebar-link" onclick="showView('tickets',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg>
+        Tickets
+        <span class="sidebar-badge" id="ticketBadge">0</span>
+      </button></li>
+      <li><button class="sidebar-link" onclick="showView('applications',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Applications
+        <span class="sidebar-badge" id="appBadge">0</span>
+      </button></li>
+      <li><button class="sidebar-link" onclick="showView('messages',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Messages
+        <span class="sidebar-badge" id="msgBadge">0</span>
+      </button></li>
+    </ul>
+
+    <div class="sidebar-section">System</div>
+    <ul class="sidebar-nav">
+      <li><button class="sidebar-link" onclick="showView('settings',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        Settings
+      </button></li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" id="logoutBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      <div class="topbar-right">
+        <div class="topbar-dot"></div>
+        <div class="topbar-admin">Administrator</div>
+      </div>
+    </div>
+    <div class="content">
+
+      <!-- OVERVIEW VIEW -->
+      <div class="view active" id="view-overview">
+        <div class="stats-row">
+          <div class="stat-card blue">
+            <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg></div>
+            <div class="stat-label">Open Tickets</div>
+            <div class="stat-num" id="statTickets">—</div>
+            <div class="stat-sub">Support requests</div>
+          </div>
+          <div class="stat-card rose">
+            <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div class="stat-label">Pending Applications</div>
+            <div class="stat-num" id="statApps">—</div>
+            <div class="stat-sub">Team applications</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div class="stat-label">Unread Messages</div>
+            <div class="stat-num" id="statMsgs">—</div>
+            <div class="stat-sub">Contact messages</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="stat-label">Total Resolved</div>
+            <div class="stat-num" id="statResolved">—</div>
+            <div class="stat-sub">Closed + approved</div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="table-card">
+            <div class="table-card-header">
+              <div>
+                <div class="table-card-title">Recent Tickets</div>
+                <div class="table-card-sub">Latest support submissions</div>
+              </div>
+              <button class="mbtn mbtn-outline" onclick="showView('tickets',document.querySelector('[onclick*=tickets]'))">View all</button>
+            </div>
+            <ul class="recent-list" id="recentTickets" style="padding:0 1.2rem"></ul>
+          </div>
+          <div class="table-card">
+            <div class="table-card-header">
+              <div>
+                <div class="table-card-title">Recent Applications</div>
+                <div class="table-card-sub">Latest team applications</div>
+              </div>
+              <button class="mbtn mbtn-outline" onclick="showView('applications',document.querySelector('[onclick*=applications]'))">View all</button>
+            </div>
+            <ul class="recent-list" id="recentApps" style="padding:0 1.2rem"></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TICKETS VIEW -->
+      <div class="view" id="view-tickets">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div>
+              <div class="table-card-title">Support Tickets</div>
+              <div class="table-card-sub">All submitted support requests and violation reports</div>
+            </div>
+            <div class="table-actions">
+              <input class="tbl-search" type="text" placeholder="Search tickets…" oninput="filterTable('tickets',this.value)"/>
+              <select class="tbl-filter" onchange="filterTableStatus('tickets',this.value)">
+                <option value="">All statuses</option>
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
+              </select>
+            </div>
+          </div>
+          <div id="ticketsTableWrap">
+            <div class="loading-row">Loading tickets…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- APPLICATIONS VIEW -->
+      <div class="view" id="view-applications">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div>
+              <div class="table-card-title">Team Applications</div>
+              <div class="table-card-sub">Join the team submissions awaiting review</div>
+            </div>
+            <div class="table-actions">
+              <input class="tbl-search" type="text" placeholder="Search applications…" oninput="filterTable('applications',this.value)"/>
+              <select class="tbl-filter" onchange="filterTableStatus('applications',this.value)">
+                <option value="">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+          </div>
+          <div id="applicationsTableWrap">
+            <div class="loading-row">Loading applications…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MESSAGES VIEW -->
+      <div class="view" id="view-messages">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div>
+              <div class="table-card-title">Contact Messages</div>
+              <div class="table-card-sub">Messages submitted via the website contact form</div>
+            </div>
+            <div class="table-actions">
+              <input class="tbl-search" type="text" placeholder="Search messages…" oninput="filterTable('messages',this.value)"/>
+              <select class="tbl-filter" onchange="filterTableStatus('messages',this.value)">
+                <option value="">All statuses</option>
+                <option value="unread">Unread</option>
+                <option value="read">Read</option>
+              </select>
+            </div>
+          </div>
+          <div id="messagesTableWrap">
+            <div class="loading-row">Loading messages…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS VIEW -->
+      <div class="view" id="view-settings">
+        <div class="settings-section">
+          <div class="settings-section-title">JSONBin Configuration</div>
+          <p style="font-size:.85rem;color:var(--muted);margin-bottom:1.2rem">Enter your JSONBin credentials below. These are used to fetch and update all submission data.</p>
+          <div class="detail-grid" style="gap:1rem;margin-bottom:.8rem">
+            <div>
+              <label class="login-label" style="font-size:.7rem">Master API Key</label>
+              <input class="settings-input" id="cfgKey" type="password" placeholder="$2b$10$…"/>
+            </div>
+            <div>
+              <label class="login-label" style="font-size:.7rem">Applications Bin ID</label>
+              <input class="settings-input" id="cfgApps" type="text" placeholder="6abc123…"/>
+            </div>
+            <div>
+              <label class="login-label" style="font-size:.7rem">Tickets Bin ID</label>
+              <input class="settings-input" id="cfgTickets" type="text" placeholder="6def456…"/>
+            </div>
+            <div>
+              <label class="login-label" style="font-size:.7rem">Messages Bin ID</label>
+              <input class="settings-input" id="cfgMsgs" type="text" placeholder="6ghi789…"/>
+            </div>
+          </div>
+          <button class="settings-save" onclick="saveConfig()">Save Configuration</button>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-title">Admin Credentials</div>
+          <div class="detail-grid" style="gap:1rem">
+            <div>
+              <label class="login-label" style="font-size:.7rem">Username</label>
+              <input class="settings-input" id="cfgUser" type="text" placeholder="admin"/>
+            </div>
+            <div>
+              <label class="login-label" style="font-size:.7rem">New Password</label>
+              <input class="settings-input" id="cfgPw" type="password" placeholder="New password"/>
+            </div>
+          </div>
+          <button class="settings-save" onclick="saveCredentials()">Update Credentials</button>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-title">Notifications</div>
+          <div class="setting-row">
+            <div><div class="setting-name">New ticket alert</div><div class="setting-desc">Show badge count on Tickets nav item</div></div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div><div class="setting-name">New application alert</div><div class="setting-desc">Show badge count on Applications nav item</div></div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div><div class="setting-name">Emergency ticket highlight</div><div class="setting-desc">Highlight emergency/safety tickets in red</div></div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Details</div>
+      <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-actions" id="modalActions"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══ CONFIG ═══ */
+const JSONBIN_API = 'https://api.jsonbin.io/v3/b';
+let CFG = {
+  key: localStorage.getItem('hgy_key') || '',
+  apps: localStorage.getItem('hgy_apps') || '',
+  tickets: localStorage.getItem('hgy_tickets') || '',
+  msgs: localStorage.getItem('hgy_msgs') || ''
+};
+let ADMIN = {
+  user: localStorage.getItem('hgy_admin_user') || 'admin',
+  pass: localStorage.getItem('hgy_admin_pass') || 'hgymission2024'
+};
+
+/* ═══ DATA STORE ═══ */
+let DATA = { tickets: [], applications: [], messages: [] };
+let filterState = { tickets: { q:'', status:'' }, applications: { q:'', status:'' }, messages: { q:'', status:'' } };
+
+/* ═══ LOGIN ═══ */
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+document.getElementById('loginPass').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin() });
+
+function doLogin(){
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value;
+  if(u===ADMIN.user && p===ADMIN.pass){
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('dashboardWrap').style.display='flex';
+    loadAllData();
+    loadSettings();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+  }
+}
+
+document.getElementById('logoutBtn').addEventListener('click',()=>{
+  document.getElementById('dashboardWrap').style.display='none';
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('loginPass').value='';
+  document.getElementById('loginErr').style.display='none';
+});
+
+/* ═══ SETTINGS ═══ */
+function loadSettings(){
+  document.getElementById('cfgKey').value = CFG.key;
+  document.getElementById('cfgApps').value = CFG.apps;
+  document.getElementById('cfgTickets').value = CFG.tickets;
+  document.getElementById('cfgMsgs').value = CFG.msgs;
+  document.getElementById('cfgUser').value = ADMIN.user;
+}
+
+function saveConfig(){
+  CFG.key = document.getElementById('cfgKey').value.trim();
+  CFG.apps = document.getElementById('cfgApps').value.trim();
+  CFG.tickets = document.getElementById('cfgTickets').value.trim();
+  CFG.msgs = document.getElementById('cfgMsgs').value.trim();
+  localStorage.setItem('hgy_key', CFG.key);
+  localStorage.setItem('hgy_apps', CFG.apps);
+  localStorage.setItem('hgy_tickets', CFG.tickets);
+  localStorage.setItem('hgy_msgs', CFG.msgs);
+  showToast('Configuration saved. Reloading data…');
+  loadAllData();
+}
+
+function saveCredentials(){
+  const u=document.getElementById('cfgUser').value.trim();
+  const p=document.getElementById('cfgPw').value;
+  if(!u){showToast('Username cannot be empty.');return}
+  ADMIN.user=u; if(p) ADMIN.pass=p;
+  localStorage.setItem('hgy_admin_user',ADMIN.user);
+  localStorage.setItem('hgy_admin_pass',ADMIN.pass);
+  showToast('Credentials updated successfully.');
+}
+
+/* ═══ DATA FETCH ═══ */
+async function fetchBin(binId){
+  if(!binId||!CFG.key) return [];
+  try{
+    const res = await fetch(JSONBIN_API+'/'+binId+'/latest',{headers:{'X-Master-Key':CFG.key}});
+    const data = await res.json();
+    return Array.isArray(data.record) ? data.record : [];
+  }catch(e){ return [] }
+}
+
+async function updateBin(binId, data){
+  if(!binId||!CFG.key) return false;
+  try{
+    await fetch(JSONBIN_API+'/'+binId,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':CFG.key},body:JSON.stringify(data)});
+    return true;
+  }catch(e){ return false }
+}
+
+async function loadAllData(){
+  const [tickets, applications, messages] = await Promise.all([
+    fetchBin(CFG.tickets), fetchBin(CFG.apps), fetchBin(CFG.msgs)
+  ]);
+  DATA.tickets = tickets;
+  DATA.applications = applications;
+  DATA.messages = messages;
+  updateBadges();
+  updateStats();
+  renderOverviewRecent();
+  renderTable('tickets');
+  renderTable('applications');
+  renderTable('messages');
+}
+
+function updateBadges(){
+  const openTickets = DATA.tickets.filter(t=>t.status==='open').length;
+  const pendingApps = DATA.applications.filter(a=>a.status==='pending').length;
+  const unreadMsgs = DATA.messages.filter(m=>m.status==='unread').length;
+  document.getElementById('ticketBadge').textContent = openTickets;
+  document.getElementById('appBadge').textContent = pendingApps;
+  document.getElementById('msgBadge').textContent = unreadMsgs;
+}
+
+function updateStats(){
+  const openTickets = DATA.tickets.filter(t=>t.status==='open').length;
+  const pendingApps = DATA.applications.filter(a=>a.status==='pending').length;
+  const unreadMsgs = DATA.messages.filter(m=>m.status==='unread').length;
+  const resolved = DATA.tickets.filter(t=>t.status==='closed').length + DATA.applications.filter(a=>a.status==='approved').length;
+  document.getElementById('statTickets').textContent = openTickets;
+  document.getElementById('statApps').textContent = pendingApps;
+  document.getElementById('statMsgs').textContent = unreadMsgs;
+  document.getElementById('statResolved').textContent = resolved;
+}
+
+function renderOverviewRecent(){
+  const tList = document.getElementById('recentTickets');
+  const aList = document.getElementById('recentApps');
+  const recentT = [...DATA.tickets].reverse().slice(0,4);
+  const recentA = [...DATA.applications].reverse().slice(0,4);
+
+  tList.innerHTML = recentT.length ? recentT.map(t=>`
+    <li class="recent-item">
+      <div class="recent-icon ri-ticket"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg></div>
+      <div>
+        <div class="recent-name">${esc(t.name||'Anonymous')}</div>
+        <div class="recent-meta">${esc(t.ticketType||'General')} &middot; <span class="badge badge-${t.status}">${t.status}</span></div>
+      </div>
+    </li>`).join('') : '<li style="padding:1.2rem 0;color:var(--muted);font-size:.85rem">No tickets yet.</li>';
+
+  aList.innerHTML = recentA.length ? recentA.map(a=>`
+    <li class="recent-item">
+      <div class="recent-icon ri-app"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+      <div>
+        <div class="recent-name">${esc(a.firstName||'')} ${esc(a.lastName||'')}</div>
+        <div class="recent-meta">${esc(a.role||'—')} &middot; <span class="badge badge-${a.status}">${a.status}</span></div>
+      </div>
+    </li>`).join('') : '<li style="padding:1.2rem 0;color:var(--muted);font-size:.85rem">No applications yet.</li>';
+}
+
+/* ═══ TABLE RENDER ═══ */
+function renderTable(type){
+  const wrap = document.getElementById(type+'TableWrap');
+  let items = [...DATA[type]].reverse();
+  const {q, status} = filterState[type];
+  if(q) items = items.filter(i=>JSON.stringify(i).toLowerCase().includes(q.toLowerCase()));
+  if(status) items = items.filter(i=>i.status===status);
+
+  if(!CFG.key || !CFG[type === 'applications' ? 'apps' : type === 'messages' ? 'msgs' : 'tickets']){
+    wrap.innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg><p>No JSONBin credentials configured.<br/>Go to Settings to set your API key and bin IDs.</p></div>`;
+    return;
+  }
+  if(!items.length){
+    wrap.innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg><p>No ${type} found.</p></div>`;
+    return;
+  }
+
+  if(type==='tickets') wrap.innerHTML = ticketsTable(items);
+  if(type==='applications') wrap.innerHTML = applicationsTable(items);
+  if(type==='messages') wrap.innerHTML = messagesTable(items);
+}
+
+function ticketsTable(items){
+  return `<table><thead><tr><th>Name</th><th>Type</th><th>Country</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead><tbody>${
+    items.map((t,i)=>`<tr>
+      <td><strong>${esc(t.name||'—')}</strong><br/><span style="font-size:.75rem;color:var(--muted)">${esc(t.email||'')}</span></td>
+      <td>${t.ticketType&&t.ticketType.includes('Emergency')?`<span class="badge badge-emergency">${esc(t.ticketType)}</span>`:esc(t.ticketType||'—')}</td>
+      <td>${esc(t.country||'—')}</td>
+      <td><span class="badge badge-${t.status||'open'}">${t.status||'open'}</span></td>
+      <td style="font-size:.78rem;color:var(--muted)">${fmtDate(t.timestamp)}</td>
+      <td><div class="row-actions">
+        <button class="act-btn" title="View" onclick='viewTicket(${JSON.stringify(t)})'><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        ${t.status==='open'?`<button class="act-btn success" title="Close" onclick='changeStatus("tickets","${t.id}","closed")'><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></button>`:''}
+      </div></td>
+    </tr>`).join('')
+  }</tbody></table>`;
+}
+
+function applicationsTable(items){
+  return `<table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Country</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead><tbody>${
+    items.map(a=>`<tr>
+      <td><strong>${esc(a.firstName||'')} ${esc(a.lastName||'')}</strong></td>
+      <td style="font-size:.82rem;color:var(--muted)">${esc(a.email||'—')}</td>
+      <td>${esc(a.role||'—')}</td>
+      <td>${esc(a.country||'—')}</td>
+      <td><span class="badge badge-${a.status||'pending'}">${a.status||'pending'}</span></td>
+      <td style="font-size:.78rem;color:var(--muted)">${fmtDate(a.timestamp)}</td>
+      <td><div class="row-actions">
+        <button class="act-btn" title="View" onclick='viewApplication(${JSON.stringify(a)})'><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        ${a.status==='pending'?`<button class="act-btn success" title="Approve" onclick='changeStatus("applications","${a.id}","approved")'><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></button>
+        <button class="act-btn danger" title="Reject" onclick='changeStatus("applications","${a.id}","rejected")'><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>`:''}
+      </div></td>
+    </tr>`).join('')
+  }</tbody></table>`;
+}
+
+function messagesTable(items){
+  return `<table><thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead><tbody>${
+    items.map(m=>`<tr>
+      <td><strong>${esc(m.name||'—')}</strong></td>
+      <td style="font-size:.82rem;color:var(--muted)">${esc(m.email||'—')}</td>
+      <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(m.subject||'—')}</td>
+      <td><span class="badge badge-${m.status||'unread'}">${m.status||'unread'}</span></td>
+      <td style="font-size:.78rem;color:var(--muted)">${fmtDate(m.timestamp)}</td>
+      <td><div class="row-actions">
+        <button class="act-btn" title="View" onclick='viewMessage(${JSON.stringify(m)})'><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        ${m.status==='unread'?`<button class="act-btn success" title="Mark read" onclick='changeStatus("messages","${m.id}","read")'><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></button>`:''}
+      </div></td>
+    </tr>`).join('')
+  }</tbody></table>`;
+}
+
+/* ═══ DETAIL MODALS ═══ */
+function viewTicket(t){
+  document.getElementById('modalTitle').textContent = 'Ticket — '+esc(t.name||'Anonymous');
+  document.getElementById('modalBody').innerHTML = `
+    <div class="detail-grid">
+      <div class="detail-row"><div class="detail-label">Full Name</div><div class="detail-val">${esc(t.name||'—')}</div></div>
+      <div class="detail-row"><div class="detail-label">Email</div><div class="detail-val">${esc(t.email||'—')}</div></div>
+      <div class="detail-row"><div class="detail-label">Ticket Type</div><div class="detail-val">${esc(t.ticketType||'—')}</div></div>
+      <div class="detail-row"><div class="detail-label">Country</div><div class="detail-val">${esc(t.country||'—')}</div></div>
+    </div>
+    <div class="detail-row"><div class="detail-label">Status</div><div class="detail-val"><span class="badge badge-${t.status}">${t.status}</span></div></div>
+    <div class="detail-row"><div class="detail-label">Submitted</div><div class="detail-val">${fmtDate(t.timestamp)}</div></div>
+    <div class="detail-row"><div class="detail-label">Description</div><div class="detail-val" style="white-space:pre-wrap;line-height:1.7">${esc(t.description||'—')}</div></div>`;
+  document.getElementById('modalActions').innerHTML = `
+    ${t.status==='open'?`<button class="mbtn mbtn-success" onclick='changeStatus("tickets","${t.id}","closed");closeModal()'>Mark Closed</button>`:''}
+    <button class="mbtn mbtn-outline" onclick="closeModal()">Close</button>`;
+  openModal();
+}
+
+function viewApplication(a){
+  document.getElementById('modalTitle').textContent = 'Application — '+esc((a.firstName||'')+' '+(a.lastName||''));
+  document.getElementById('modalBody').innerHTML = `
+    <div class="detail-grid">
+      <div class="detail-row"><div class="detail-label">First Name</div><div class="detail-val">${esc(a.firstName||'—')}</div></div>
+      <div class="detail-row"><div class="detail-label">Last Name</div><div class="detail-val">${esc(a.lastName||'—')}</div></div>
+      <div class="detail-row"><div class="detail-label">Email</div><div class="detail-val">${esc(a.email||'—')}</div></div>
+      <div class="detail-row"><div class="detail-label">Country</div><div class="detail-val">${esc(a.country||'—')}</div></div>
+    </div>
+    <div class="detail-row"><div class="detail-label">Role of Interest</div><div class="detail-val">${esc(a.role||'—')}</div></div>
+    <div class="detail-row"><div class="detail-label">Status</div><div class="detail-val"><span class="badge badge-${a.status}">${a.status}</span></div></div>
+    <div class="detail-row"><div class="detail-label">Submitted</div><div class="detail-val">${fmtDate(a.timestamp)}</div></div>
+    <div class="detail-row"><div class="detail-label">About</div><div class="detail-val" style="white-space:pre-wrap;line-height:1.7">${esc(a.bio||'—')}</div></div>`;
+  document.getElementById('modalActions').innerHTML = `
+    ${a.status==='pending'?`
+      <button class="mbtn mbtn-success" onclick='changeStatus("applications","${a.id}","approved");closeModal()'>Approve</button>
+      <button class="mbtn mbtn-danger" onclick='changeStatus("applications","${a.id}","rejected");closeModal()'>Reject</button>`:''}
+    <button class="mbtn mbtn-outline" onclick="closeModal()">Close</button>`;
+  openModal();
+}
+
+function viewMessage(m){
+  // Mark as read when viewed
+  if(m.status==='unread') changeStatus('messages',m.id,'read',true);
+  document.getElementById('modalTitle').textContent = 'Message — '+esc(m.name||'Anonymous');
+  document.getElementById('modalBody').innerHTML = `
+    <div class="detail-grid">
+      <div class="detail-row"><div class="detail-label">Name</div><div class="detail-val">${esc(m.name||'—')}</div></div>
+      <div class="detail-row"><div class="detail-label">Email</div><div class="detail-val">${esc(m.email||'—')}</div></div>
+    </div>
+    <div class="detail-row"><div class="detail-label">Subject</div><div class="detail-val">${esc(m.subject||'—')}</div></div>
+    <div class="detail-row"><div class="detail-label">Submitted</div><div class="detail-val">${fmtDate(m.timestamp)}</div></div>
+    <div class="detail-row"><div class="detail-label">Message</div><div class="detail-val" style="white-space:pre-wrap;line-height:1.75">${esc(m.body||'—')}</div></div>`;
+  document.getElementById('modalActions').innerHTML = `
+    <a href="mailto:${esc(m.email||'')}?subject=Re: ${esc(m.subject||'Your message to HGY Mission')}" class="mbtn mbtn-primary" style="text-decoration:none">Reply via Email</a>
+    <button class="mbtn mbtn-outline" onclick="closeModal()">Close</button>`;
+  openModal();
+}
+
+function openModal(){document.getElementById('detailModal').classList.add('open')}
+function closeModal(){document.getElementById('detailModal').classList.remove('open')}
+document.getElementById('detailModal').addEventListener('click',e=>{if(e.target===document.getElementById('detailModal'))closeModal()});
+
+/* ═══ STATUS CHANGE ═══ */
+async function changeStatus(type, id, newStatus, silent=false){
+  const binKey = type==='applications'?'apps':type==='messages'?'msgs':'tickets';
+  const arr = DATA[type];
+  const idx = arr.findIndex(i=>String(i.id)===String(id));
+  if(idx===-1){showToast('Item not found.');return}
+  arr[idx].status = newStatus;
+  const ok = await updateBin(CFG[binKey], arr);
+  if(ok){
+    if(!silent) showToast('Status updated to "'+newStatus+'".');
+    updateBadges();updateStats();renderOverviewRecent();renderTable(type);
+  } else {
+    showToast('Failed to update. Check your credentials in Settings.');
+  }
+}
+
+/* ═══ FILTER ═══ */
+function filterTable(type, q){ filterState[type].q = q; renderTable(type) }
+function filterTableStatus(type, s){ filterState[type].status = s; renderTable(type) }
+
+/* ═══ VIEW SWITCH ═══ */
+const viewTitles = {overview:'Dashboard',tickets:'Support Tickets',applications:'Team Applications',messages:'Contact Messages',settings:'Settings'};
+function showView(name, btn){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.sidebar-link').forEach(l=>l.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  if(btn) btn.classList.add('active');
+  document.getElementById('topbarTitle').textContent = viewTitles[name]||name;
+}
+
+/* ═══ UTILITIES ═══ */
+function esc(str){ const d=document.createElement('div');d.textContent=str;return d.innerHTML }
+function fmtDate(ts){ if(!ts)return '—'; try{return new Date(ts).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}catch{return ts} }
+
+function showToast(msg,dur=3200){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),dur);
+}
+
+/* Auto-refresh every 60s */
+setInterval(()=>{ if(document.getElementById('dashboardWrap').style.display!=='none') loadAllData() }, 60000);
+</script>
+</body>
+</html>
