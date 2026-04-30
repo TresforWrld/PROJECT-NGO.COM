@@ -19,22 +19,6 @@
       pointer-events:none;
     }
 
-    /* ── HERO — clean full-bleed image, no overlay, no text ── */
-    .prog-hero{
-      margin-top:70px; /* clear fixed nav */
-      width:100%;
-      line-height:0;
-      font-size:0;
-    }
-    .prog-hero img{
-      display:block;
-      width:100%;
-      height:auto;
-      max-height:520px;
-      object-fit:cover;
-      object-position:center 40%;
-    }
-
     /* ── DATES STRIP ── */
     .dates-strip{
       display:grid;grid-template-columns:repeat(5,1fr);
@@ -61,7 +45,7 @@
     .prog-card{
       display:grid;
       grid-template-columns:1fr 1fr;
-      grid-template-rows:1fr; /* key: both cells same height */
+      grid-template-rows:1fr;
       background:var(--gb);
       border:1px solid var(--gborder);
       backdrop-filter:var(--blurs);
@@ -71,75 +55,43 @@
       transition:transform .25s,box-shadow .25s,background .25s;
     }
     .prog-card:hover{transform:translateY(-5px);box-shadow:0 24px 60px rgba(92,10,46,.13);background:var(--gh)}
-
-    /* flip alternates image to the right */
     .prog-card.flip{direction:rtl}
     .prog-card.flip > *{direction:ltr}
 
-    /* image cell — fills entire cell height, no overflow */
-    .prog-img{
-      position:relative;
-      overflow:hidden;
-      /* no min/max-height — let the text side dictate height */
-    }
+    .prog-img{position:relative;overflow:hidden}
     .prog-img img{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center;
-      display:block;
-      transition:transform .45s;
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;object-position:center;display:block;transition:transform .45s;
     }
     .prog-card:hover .prog-img img{transform:scale(1.04)}
 
-    /* text cell */
     .prog-body{
-      padding:2.8rem 3rem;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      gap:0;
+      padding:2.8rem 3rem;display:flex;flex-direction:column;justify-content:center;gap:0;
     }
-
     .prog-num{
-      font-family:'Space Mono',monospace;font-size:.58rem;
-      letter-spacing:.18em;text-transform:uppercase;
-      color:var(--muted);margin-bottom:.55rem;
-      display:flex;align-items:center;gap:.5rem;
+      font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;
+      color:var(--muted);margin-bottom:.55rem;display:flex;align-items:center;gap:.5rem;
     }
     .prog-num::before{content:'';width:16px;height:1px;background:var(--pl)}
-
     .prog-badge{
-      display:inline-flex;align-items:center;gap:.4rem;
-      font-family:'Space Mono',monospace;font-size:.58rem;
-      letter-spacing:.09em;text-transform:uppercase;
-      background:rgba(92,10,46,.08);color:var(--p);
-      padding:.28rem .85rem .28rem .55rem;border-radius:100px;
-      font-weight:700;margin-bottom:.9rem;width:fit-content;
+      display:inline-flex;align-items:center;gap:.4rem;font-family:'Space Mono',monospace;font-size:.58rem;
+      letter-spacing:.09em;text-transform:uppercase;background:rgba(92,10,46,.08);color:var(--p);
+      padding:.28rem .85rem .28rem .55rem;border-radius:100px;font-weight:700;margin-bottom:.9rem;width:fit-content;
     }
     .prog-badge svg{width:11px;height:11px;stroke:var(--p)}
-
     .prog-title{
-      font-family:'Playfair Display',serif;font-size:1.65rem;
-      font-weight:900;color:var(--pd);line-height:1.15;margin-bottom:.5rem;
+      font-family:'Playfair Display',serif;font-size:1.65rem;font-weight:900;color:var(--pd);line-height:1.15;margin-bottom:.5rem;
     }
     .prog-meta{display:flex;align-items:center;gap:1.1rem;margin-bottom:1rem;flex-wrap:wrap}
     .prog-meta-item{
-      display:flex;align-items:center;gap:.35rem;
-      font-family:'Space Mono',monospace;font-size:.63rem;
-      color:var(--muted);font-weight:700;
+      display:flex;align-items:center;gap:.35rem;font-family:'Space Mono',monospace;font-size:.63rem;color:var(--muted);font-weight:700;
     }
     .prog-meta-item svg{width:12px;height:12px;stroke:var(--pl);flex-shrink:0}
     .prog-desc{font-size:.88rem;line-height:1.78;color:var(--muted);margin-bottom:1.3rem}
-
     .prog-tags{display:flex;flex-wrap:wrap;gap:.45rem}
     .prog-tag{
-      display:flex;align-items:center;gap:.32rem;
-      background:rgba(92,10,46,.06);border:1px solid rgba(92,10,46,.1);
-      border-radius:100px;padding:.26rem .78rem;
-      font-size:.71rem;font-weight:700;color:var(--p);
+      display:flex;align-items:center;gap:.32rem;background:rgba(92,10,46,.06);border:1px solid rgba(92,10,46,.1);
+      border-radius:100px;padding:.26rem .78rem;font-size:.71rem;font-weight:700;color:var(--p);
       font-family:'Space Mono',monospace;letter-spacing:.04em;
     }
     .prog-tag svg{width:10px;height:10px;stroke:var(--p)}
@@ -149,8 +101,7 @@
     .impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
     .impact-card{
       background:var(--gb);border:1px solid var(--gborder);backdrop-filter:var(--blurs);
-      border-radius:20px;padding:2rem 1.8rem;position:relative;overflow:hidden;
-      transition:transform .25s,box-shadow .25s;
+      border-radius:20px;padding:2rem 1.8rem;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s;
     }
     .impact-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--pl)}
     .impact-card:hover{transform:translateY(-5px);box-shadow:0 20px 52px rgba(92,10,46,.12)}
@@ -180,21 +131,11 @@
 
     /* ── MOBILE ── */
     @media(max-width:900px){
-      .prog-hero img{max-height:340px}
       .dates-strip{grid-template-columns:1fr 1fr}
       .dates-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
       .dates-item:nth-child(odd){border-right:1px solid rgba(255,255,255,.08)}
-
-      .prog-card,.prog-card.flip{
-        grid-template-columns:1fr;
-        grid-template-rows:260px auto; /* fixed image height on mobile */
-        direction:ltr;
-      }
-      .prog-img{
-        /* on mobile: fixed height, image is not absolutely positioned */
-        position:relative;
-        height:260px;
-      }
+      .prog-card,.prog-card.flip{grid-template-columns:1fr;grid-template-rows:260px auto;direction:ltr}
+      .prog-img{position:relative;height:260px}
       .prog-body{padding:2rem 1.6rem}
       .prog-title{font-size:1.3rem}
       .impact-grid{grid-template-columns:1fr}
@@ -206,7 +147,6 @@
     @media(max-width:480px){
       .dates-strip{grid-template-columns:1fr}
       .dates-item{border-right:none}
-      .prog-hero img{max-height:240px}
     }
   </style>
   <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
@@ -237,10 +177,19 @@
     <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
   </nav>
 
-  <!-- HERO — clean image, no overlay -->
-  <div class="prog-hero">
-    <img src="https://i.imgur.com/lk5XtA9.jpeg" alt="HGY Mission — Empowerment, Dignity and Hope"/>
-  </div>
+  <!-- STANDARD PAGE HERO — no image -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-breadcrumb">
+        <a href="index.html">Home</a>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        <span>Programs</span>
+      </div>
+      <div class="page-eyebrow">2026 Calendar</div>
+      <h1 class="page-title">Programs That <em>Move Communities</em></h1>
+      <p class="page-body">HGY Mission convenes annual programmes, summits, forums, and networks that bring together partners, activists, faith leaders, survivors, youth representatives, and development actors across Africa — creating spaces for learning, strategy, and collective action.</p>
+    </div>
+  </section>
 
   <!-- DATES STRIP -->
   <div class="dates-strip">
@@ -286,25 +235,14 @@
 
     <!-- 01 Initiate -->
     <div class="prog-card reveal">
-      <div class="prog-img">
-        <img src="https://i.imgur.com/WD2ZcEz.jpeg" alt="Initiate — Uganda"/>
-      </div>
+      <div class="prog-img"><img src="https://i.imgur.com/WD2ZcEz.jpeg" alt="Initiate — Uganda"/></div>
       <div class="prog-body">
         <div class="prog-num">Program 01</div>
-        <div class="prog-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          GBV Prevention
-        </div>
+        <div class="prog-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>GBV Prevention</div>
         <h3 class="prog-title">Initiate</h3>
         <div class="prog-meta">
-          <div class="prog-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            18–19 April 2026
-          </div>
-          <div class="prog-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Uganda
-          </div>
+          <div class="prog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>18–19 April 2026</div>
+          <div class="prog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Uganda</div>
         </div>
         <p class="prog-desc">An annual conference hosted in Uganda focused on gender-based violence prevention, survivor-centred support systems, and strengthening community protection mechanisms. It convenes civil society organisations, local leaders, service providers, and policymakers to discuss practical approaches to prevention, response, and long-term social change.</p>
         <div class="prog-tags">
@@ -318,25 +256,14 @@
 
     <!-- 02 The Justice Network -->
     <div class="prog-card flip reveal">
-      <div class="prog-img">
-        <img src="https://i.imgur.com/Ly5yFul.jpeg" alt="The Justice Network — Burundi"/>
-      </div>
+      <div class="prog-img"><img src="https://i.imgur.com/Ly5yFul.jpeg" alt="The Justice Network — Burundi"/></div>
       <div class="prog-body">
         <div class="prog-num">Program 02</div>
-        <div class="prog-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Civic Activism
-        </div>
+        <div class="prog-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Civic Activism</div>
         <h3 class="prog-title">The Justice Network</h3>
         <div class="prog-meta">
-          <div class="prog-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            13–14 June 2026
-          </div>
-          <div class="prog-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Burundi
-          </div>
+          <div class="prog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>13–14 June 2026</div>
+          <div class="prog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Burundi</div>
         </div>
         <p class="prog-desc">Hosted in Burundi, this program focuses on activism, civic participation, and human rights advocacy. It serves as a platform for activists, youth leaders, journalists, and civil society actors to exchange ideas on strengthening citizen engagement, promoting accountability, and advancing social justice movements.</p>
         <div class="prog-tags">
@@ -350,25 +277,14 @@
 
     <!-- 03 Her Voice Summit -->
     <div class="prog-card reveal">
-      <div class="prog-img">
-        <img src="https://i.imgur.com/2IibOJG.jpeg" alt="Her Voice Summit — Zambia"/>
-      </div>
+      <div class="prog-img"><img src="https://i.imgur.com/2IibOJG.jpeg" alt="Her Voice Summit — Zambia"/></div>
       <div class="prog-body">
         <div class="prog-num">Program 03</div>
-        <div class="prog-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          Women's Leadership
-        </div>
+        <div class="prog-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Women's Leadership</div>
         <h3 class="prog-title">Her Voice Summit</h3>
         <div class="prog-meta">
-          <div class="prog-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            25–26 July 2026
-          </div>
-          <div class="prog-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Zambia
-          </div>
+          <div class="prog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>25–26 July 2026</div>
+          <div class="prog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Zambia</div>
         </div>
         <p class="prog-desc">Held in Zambia, Her Voice Summit centres on women's leadership, empowerment, and inclusive participation in decision-making spaces. It highlights women-led innovation, leadership development, and economic empowerment while creating mentorship opportunities for emerging leaders across the region.</p>
         <div class="prog-tags">
@@ -382,25 +298,14 @@
 
     <!-- 04 Safe Futures Forum -->
     <div class="prog-card flip reveal">
-      <div class="prog-img">
-        <img src="https://i.imgur.com/fbNKBeu.jpeg" alt="Safe Futures Forum — Zambia"/>
-      </div>
+      <div class="prog-img"><img src="https://i.imgur.com/fbNKBeu.jpeg" alt="Safe Futures Forum — Zambia"/></div>
       <div class="prog-body">
         <div class="prog-num">Program 04</div>
-        <div class="prog-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Child Protection
-        </div>
+        <div class="prog-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Child Protection</div>
         <h3 class="prog-title">Safe Futures Forum</h3>
         <div class="prog-meta">
-          <div class="prog-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            12–13 September 2026
-          </div>
-          <div class="prog-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Zambia
-          </div>
+          <div class="prog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>12–13 September 2026</div>
+          <div class="prog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Zambia</div>
         </div>
         <p class="prog-desc">Safe Futures Forum focuses on child protection, safeguarding, and adolescent wellbeing. It brings together education actors, child rights advocates, social workers, and community leaders to strengthen systems that protect children and young people from harm, exploitation, and unsafe environments.</p>
         <div class="prog-tags">
@@ -414,25 +319,14 @@
 
     <!-- 05 Community Resilience Exchange -->
     <div class="prog-card reveal">
-      <div class="prog-img">
-        <img src="https://i.imgur.com/GIRxjGL.jpeg" alt="Community Resilience Exchange — Uganda"/>
-      </div>
+      <div class="prog-img"><img src="https://i.imgur.com/GIRxjGL.jpeg" alt="Community Resilience Exchange — Uganda"/></div>
       <div class="prog-body">
         <div class="prog-num">Program 05</div>
-        <div class="prog-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          Community Development
-        </div>
+        <div class="prog-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Community Development</div>
         <h3 class="prog-title">Community Resilience Exchange</h3>
         <div class="prog-meta">
-          <div class="prog-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            7–8 November 2026
-          </div>
-          <div class="prog-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Uganda
-          </div>
+          <div class="prog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>7–8 November 2026</div>
+          <div class="prog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Uganda</div>
         </div>
         <p class="prog-desc">Focused on community development, resilience-building, and sustainable local solutions. It promotes collaboration among practitioners working on livelihoods, local innovation, and resilience in vulnerable communities facing economic and environmental pressures across the region.</p>
         <div class="prog-tags">
@@ -454,36 +348,12 @@
         <p class="section-body reveal" style="max-width:520px;margin:.8rem auto 0">Every programme is designed to produce tangible outcomes — not just conversations, but commitments, networks, and action plans that outlast the gathering itself.</p>
       </div>
       <div class="impact-grid">
-        <div class="impact-card reveal rd1">
-          <div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="impact-title">Shared Learning</div>
-          <div class="impact-desc">Participants gain new insights, best practices, and innovative approaches from peers working in similar contexts across the continent.</div>
-        </div>
-        <div class="impact-card reveal rd2">
-          <div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <div class="impact-title">Network Building</div>
-          <div class="impact-desc">Gatherings strengthen relationships between partners, activists, and faith leaders, creating lasting networks for collaboration and mutual support.</div>
-        </div>
-        <div class="impact-card reveal rd3">
-          <div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <div class="impact-title">Collective Strategy</div>
-          <div class="impact-desc">Collaborative planning sessions produce aligned strategies, joint advocacy positions, and coordinated responses to emerging challenges.</div>
-        </div>
-        <div class="impact-card reveal">
-          <div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-          <div class="impact-title">Survivor Visibility</div>
-          <div class="impact-desc">Programmes centre survivor voices and lived experience, ensuring those most affected by injustice shape the solutions designed to address it.</div>
-        </div>
-        <div class="impact-card reveal rd1">
-          <div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <div class="impact-title">Faith-Grounded Action</div>
-          <div class="impact-desc">Every programme anchors its work in faith values — dignity, justice, and compassion — mobilising churches and faith communities as agents of change.</div>
-        </div>
-        <div class="impact-card reveal rd2">
-          <div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-          <div class="impact-title">Cross-Border Connection</div>
-          <div class="impact-desc">Delegates from multiple countries exchange knowledge and build cross-border solidarity, amplifying impact beyond any single national context.</div>
-        </div>
+        <div class="impact-card reveal rd1"><div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="impact-title">Shared Learning</div><div class="impact-desc">Participants gain new insights, best practices, and innovative approaches from peers working in similar contexts across the continent.</div></div>
+        <div class="impact-card reveal rd2"><div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="impact-title">Network Building</div><div class="impact-desc">Gatherings strengthen relationships between partners, activists, and faith leaders, creating lasting networks for collaboration and mutual support.</div></div>
+        <div class="impact-card reveal rd3"><div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="impact-title">Collective Strategy</div><div class="impact-desc">Collaborative planning sessions produce aligned strategies, joint advocacy positions, and coordinated responses to emerging challenges.</div></div>
+        <div class="impact-card reveal"><div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="impact-title">Survivor Visibility</div><div class="impact-desc">Programmes centre survivor voices and lived experience, ensuring those most affected by injustice shape the solutions designed to address it.</div></div>
+        <div class="impact-card reveal rd1"><div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="impact-title">Faith-Grounded Action</div><div class="impact-desc">Every programme anchors its work in faith values — dignity, justice, and compassion — mobilising churches and faith communities as agents of change.</div></div>
+        <div class="impact-card reveal rd2"><div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="impact-title">Cross-Border Connection</div><div class="impact-desc">Delegates from multiple countries exchange knowledge and build cross-border solidarity, amplifying impact beyond any single national context.</div></div>
       </div>
     </div>
   </section>
@@ -498,31 +368,16 @@
       </div>
       <div class="inq-cards reveal rd2">
         <div class="inq-card">
-          <div class="inq-card-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div>
-            <div class="inq-card-label">Conference Secretariat</div>
-            <div class="inq-card-val"><a href="mailto:info@hgymission.org">info@hgymission.org</a></div>
-          </div>
+          <div class="inq-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="inq-card-label">Conference Secretariat</div><div class="inq-card-val"><a href="mailto:info@hgymission.org">info@hgymission.org</a></div></div>
         </div>
         <div class="inq-card">
-          <div class="inq-card-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          </div>
-          <div>
-            <div class="inq-card-label">Website</div>
-            <div class="inq-card-val"><a href="http://www.hgymission.org" target="_blank" rel="noopener">www.hgymission.org</a></div>
-          </div>
+          <div class="inq-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div><div class="inq-card-label">Website</div><div class="inq-card-val"><a href="http://www.hgymission.org" target="_blank" rel="noopener">www.hgymission.org</a></div></div>
         </div>
         <div class="inq-card">
-          <div class="inq-card-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
-          </div>
-          <div>
-            <div class="inq-card-label">Inquiries Include</div>
-            <div class="inq-card-val small">Registration &middot; Partnerships &middot; Speaking Opportunities &middot; Sponsorship</div>
-          </div>
+          <div class="inq-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></div>
+          <div><div class="inq-card-label">Inquiries Include</div><div class="inq-card-val small">Registration &middot; Partnerships &middot; Speaking Opportunities &middot; Sponsorship</div></div>
         </div>
       </div>
     </div>
@@ -565,8 +420,12 @@
             <span>info@hgymission.org</span>
           </div>
           <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            <span>www.hgymission.org</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Ørbækvej 716, 5220 Odense SØ<br/>Denmark</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.73a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>+45 60 29 90 42</span>
           </div>
         </div>
       </div>
