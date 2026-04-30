@@ -4,17 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Contact Us — HGY Mission</title>
-  <meta name="description"
-    content="Get in touch with HGY Mission. Reach out for partnerships, support, volunteer opportunities, or general enquiries.">
+  <meta name="description" content="Get in touch with HGY Mission. Reach out for partnerships, support, volunteer opportunities, or general enquiries.">
   <meta property="og:title" content="Contact Us — HGY Mission">
-  <meta property="og:description"
-    content="Connect with HGY Mission for partnerships, support, volunteer opportunities, or general enquiries.">
+  <meta property="og:description" content="Connect with HGY Mission for partnerships, support, volunteer opportunities, or general enquiries.">
   <link rel="stylesheet" href="shared.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap"
-    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <style>
+    body::before{content:'';position:fixed;inset:0;z-index:-1;
+      background:radial-gradient(ellipse 70% 55% at 8% 12%,rgba(92,10,46,0.07) 0%,transparent 55%),
+        radial-gradient(ellipse 55% 45% at 92% 88%,rgba(163,49,90,0.06) 0%,transparent 55%),#fff;
+      pointer-events:none}
+
     .contact-hero{padding:8rem 3rem 5rem;background:var(--pd);position:relative;overflow:hidden}
     .contact-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(-55deg,transparent,transparent 40px,rgba(255,255,255,.015) 40px,rgba(255,255,255,.015) 41px)}
     .contact-hero-inner{position:relative;z-index:2;max-width:800px;margin:0 auto;text-align:center}
@@ -22,45 +25,45 @@
     .contact-hero .section-label::before{background:rgba(255,255,255,.32)}
     .contact-hero .section-title{color:#fff;margin-bottom:1rem}
     .contact-hero .section-body{color:rgba(255,255,255,.6);max-width:600px;margin:0 auto}
-    
+
     .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;padding:6rem 3rem;max-width:1100px;margin:0 auto}
     .contact-info{display:flex;flex-direction:column;gap:2.5rem}
     .contact-info-item{display:flex;gap:1.2rem;align-items:flex-start}
     .contact-info-icon{width:52px;height:52px;border-radius:16px;background:rgba(92,10,46,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--p)}
     .contact-info-icon svg{width:22px;height:22px}
     .contact-info-label{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:.3rem}
-    .contact-info-value{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:var(--text)}
+    .contact-info-value{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:var(--pd)}
     .contact-info-value a{color:var(--p);text-decoration:none}
     .contact-info-value a:hover{text-decoration:underline}
-    
+
     .contact-form-card{background:var(--gb);border:1px solid var(--gborder);backdrop-filter:blur(12px);border-radius:24px;padding:2.5rem;box-shadow:0 24px 72px rgba(92,10,46,.06)}
     .contact-form-card h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--p);margin-bottom:1.8rem}
     .form-row{margin-bottom:1.2rem}
     .form-row label{display:block;font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
-    .form-row input,.form-row select,.form-row textarea{width:100%;padding:.75rem 1rem;background:#fff;border:1.5px solid rgba(92,10,46,.1);border-radius:12px;font-family:'Inter',sans-serif;font-size:.9rem;color:var(--text);transition:border .2s}
+    .form-row input,.form-row select,.form-row textarea{width:100%;padding:.75rem 1rem;background:#fff;border:1.5px solid rgba(92,10,46,.1);border-radius:12px;font-family:'Nunito',sans-serif;font-size:.9rem;color:var(--pd);transition:border .2s;box-sizing:border-box}
     .form-row input:focus,.form-row select:focus,.form-row textarea:focus{outline:none;border-color:var(--p)}
     .form-row textarea{min-height:120px;resize:vertical}
     .form-row-half{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-    .form-submit{width:100%;background:var(--p);color:#fff;padding:.9rem;border-radius:14px;font-weight:700;font-size:.95rem;font-family:'Inter',sans-serif;border:none;cursor:pointer;transition:background .2s,transform .1s;margin-top:.5rem}
+    .form-submit{width:100%;background:var(--p);color:#fff;padding:.9rem;border-radius:14px;font-weight:700;font-size:.95rem;font-family:'Nunito',sans-serif;border:none;cursor:pointer;transition:background .2s,transform .1s;margin-top:1.2rem;display:block}
     .form-submit:hover{background:var(--pd)}
     .form-submit:active{transform:scale(.98)}
-    
+
     .contact-map{padding:0 3rem 6rem}
     .contact-map-inner{max-width:1100px;margin:0 auto;border-radius:24px;overflow:hidden;box-shadow:0 24px 72px rgba(92,10,46,.08);border:1px solid var(--gborder)}
     #contactMap{height:360px;width:100%}
-    
+
     .contact-faq{padding:6rem 3rem;background:var(--gb)}
     .contact-faq-inner{max-width:800px;margin:0 auto}
     .contact-faq-inner .section-label{justify-content:center}
     .contact-faq-inner .section-title{text-align:center;margin-bottom:2.5rem}
     .faq-item{background:#fff;border:1px solid var(--gborder);border-radius:16px;padding:1.5rem 1.8rem;margin-bottom:1rem;cursor:pointer;transition:border .2s,box-shadow .2s}
     .faq-item:hover{border-color:rgba(92,10,46,.2);box-shadow:0 4px 20px rgba(92,10,46,.06)}
-    .faq-q{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:1rem}
+    .faq-q{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--pd);display:flex;justify-content:space-between;align-items:center;gap:1rem}
     .faq-q svg{width:18px;height:18px;color:var(--pl);flex-shrink:0;transition:transform .3s}
     .faq-item.open .faq-q svg{transform:rotate(180deg)}
     .faq-a{font-size:.9rem;line-height:1.75;color:var(--muted);max-height:0;overflow:hidden;transition:max-height .35s ease,margin .35s ease;margin-top:0}
     .faq-item.open .faq-a{max-height:300px;margin-top:1rem}
-    
+
     .emergency-contact{background:linear-gradient(135deg,var(--pd),var(--pm));padding:5rem 3rem;text-align:center;position:relative;overflow:hidden}
     .emergency-contact::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(-55deg,transparent,transparent 40px,rgba(255,255,255,.02) 40px,rgba(255,255,255,.02) 41px)}
     .emergency-inner{position:relative;z-index:2;max-width:700px;margin:0 auto}
@@ -70,7 +73,7 @@
     .emergency-inner .section-body{color:rgba(255,255,255,.6);max-width:560px;margin:0 auto}
     .emergency-email{display:inline-block;margin-top:1.5rem;padding:.9rem 2.5rem;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);border-radius:14px;color:#fff;font-family:'Space Mono',monospace;font-size:1rem;font-weight:700;letter-spacing:.04em;text-decoration:none;transition:background .2s}
     .emergency-email:hover{background:rgba(255,255,255,.2)}
-    
+
     @media(max-width:768px){
       .contact-grid{grid-template-columns:1fr;gap:3rem;padding:4rem 1.5rem}
       .form-row-half{grid-template-columns:1fr}
@@ -82,12 +85,20 @@
   </style>
   <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
 </head>
-<body style="padding-top: 0px;" class="">
-  <nav id="mainNav"><a href="index.html" class="nav-logo"><img src="https://i.imgur.com/LtgUvvp.png" alt="HGY" />
-      <div class="nav-logo-text"><span class="nav-logo-abbr">HGY Mission</span><span class="nav-logo-sub">
-          </span></div>
+<body>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <img src="https://i.imgur.com/LtgUvvp.png" alt="HGY Mission"/>
+      <div class="nav-logo-text">
+        <span class="nav-logo-abbr">HGY Mission</span>
+        <span class="nav-logo-sub"></span>
+      </div>
     </a>
-    <ul id="navLinks" class="nav-links">
+    <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
       <li><a href="partnerships.html">Partnerships</a></li>
       <li><a href="projects.html">Projects</a></li>
@@ -96,308 +107,211 @@
       <li><a href="countries.html">Countries</a></li>
       <li><a href="about.html">About Us</a></li>
       <li><a href="contact.html" class="nav-cta">Contact</a></li>
-    </ul><button id="burger" class="nav-burger"><span></span><span></span><span></span></button>
-  </nav><!-- Hero -->
+    </ul>
+  </nav>
+
+  <!-- Hero -->
   <section class="contact-hero">
     <div class="contact-hero-inner">
-      <div class="section-label reveal revealed">Get in Touch</div>
-      <h1 class="section-title reveal revealed">We Would Love to Hear From You</h1>
-      <p class="section-body reveal revealed">Whether you are seeking partnership opportunities, need support, want to
-        volunteer, or simply have a question, our team is here to help. Reach out and let us walk this journey together.
-      </p>
+      <div class="section-label reveal">Get in Touch</div>
+      <h1 class="section-title reveal">We Would Love to Hear From You</h1>
+      <p class="section-body reveal">Whether you are seeking partnership opportunities, need support, want to volunteer, or simply have a question, our team is here to help. Reach out and let us walk this journey together.</p>
     </div>
-  </section><!-- Contact Grid -->
+  </section>
+
+  <!-- Contact Grid -->
   <section class="contact-grid">
     <div class="contact-info">
-      <div class="contact-info-item reveal revealed">
-        <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-          </svg></div>
+      <div class="contact-info-item reveal">
+        <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
         <div>
           <div class="contact-info-label">Email</div>
           <div class="contact-info-value"><a href="mailto:info@hgymission.org">info@hgymission.org</a></div>
         </div>
       </div>
-      <div class="contact-info-item reveal revealed">
-        <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path
-              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-            </path>
-          </svg></div>
+      <div class="contact-info-item reveal">
+        <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.39 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13"/></svg></div>
         <div>
           <div class="contact-info-label">Phone</div>
-          <div class="contact-info-value"><a href="tel:+263775000000">+260 974925062</a></div>
+          <div class="contact-info-value"><a href="tel:+4560299042">+45 60 29 90 42</a></div>
         </div>
       </div>
-      <div class="contact-info-item reveal revealed">
-        <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-            <circle cx="12" cy="10" r="3"></circle>
-          </svg></div>
+      <div class="contact-info-item reveal">
+        <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
         <div>
-          <div class="contact-info-label">Headquarters</div>
-          <div class="contact-info-value">Zambia</div>
+          <div class="contact-info-label">Address</div>
+          <div class="contact-info-value">Ørbækvej 716, 5220 Odense SØ<br/>Denmark</div>
         </div>
       </div>
-      <div class="contact-info-item reveal revealed">
-        <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg></div>
+      <div class="contact-info-item reveal">
+        <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         <div>
           <div class="contact-info-label">Office Hours</div>
           <div class="contact-info-value">Mon to Fri: 08:00 to 17:00 CAT</div>
         </div>
       </div>
-    </div><!-- Contact Form -->
-    <div class="contact-form-card reveal revealed">
+    </div>
+
+    <!-- Contact Form -->
+    <div class="contact-form-card reveal">
       <h3>Send Us a Message</h3>
-      <form id="contactForm">
+      <form id="contactForm" onsubmit="handleContact(event)">
         <div class="form-row-half">
-          <div class="form-row"><label for="cName">Full Name</label><input type="text" id="cName"
-              placeholder="Your name" required /></div>
-          <div class="form-row"><label for="cEmail">Email Address</label><input type="email" id="cEmail"
-              placeholder="you@example.com" required /></div>
+          <div class="form-row"><label for="cName">Full Name</label><input type="text" id="cName" placeholder="Your name" required/></div>
+          <div class="form-row"><label for="cEmail">Email Address</label><input type="email" id="cEmail" placeholder="you@example.com" required/></div>
         </div>
         <div class="form-row"><label for="cSubject">Subject</label><select id="cSubject" required>
-            <option value="">Select a subject</option>
-            <option value="partnership">Partnership Enquiry</option>
-            <option value="volunteer">Volunteer Opportunity</option>
-            <option value="support">Support Request</option>
-            <option value="media">Media or Press</option>
-            <option value="donation">Donation Enquiry</option>
-            <option value="general">General Question</option>
-          </select></div>
-        <div class="form-row"><label for="cMessage">Message</label><textarea id="cMessage"
-            placeholder="How can we help you?" required></textarea></div><button type="submit" class="form-submit">Send
-          Message</button>
+          <option value="">Select a subject</option>
+          <option value="partnership">Partnership Enquiry</option>
+          <option value="volunteer">Volunteer Opportunity</option>
+          <option value="support">Support Request</option>
+          <option value="media">Media or Press</option>
+          <option value="donation">Donation Enquiry</option>
+          <option value="general">General Question</option>
+        </select></div>
+        <div class="form-row"><label for="cMessage">Message</label><textarea id="cMessage" placeholder="How can we help you?" required></textarea></div>
+        <button type="submit" class="form-submit">Send Message</button>
       </form>
     </div>
-  </section><!-- Map -->
-  <section class="contact-map reveal revealed">
+  </section>
+
+  <!-- Map -->
+  <section class="contact-map">
     <div class="contact-map-inner">
-      <div id="contactMap" tabindex="0"
-        class="leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom c1731">
-        <div class="leaflet-pane leaflet-map-pane c1741">
-          <div class="leaflet-pane leaflet-tile-pane">
-            <div class="leaflet-layer c1750">
-              <div class="leaflet-tile-container leaflet-zoom-animated c1754"><img alt=""
-                  src="https://c.tile.openstreetmap.org/5/18/17.png"
-                  class="leaflet-tile leaflet-tile-loaded c1759" /><img alt=""
-                  src="https://a.tile.openstreetmap.org/5/18/18.png"
-                  class="leaflet-tile leaflet-tile-loaded c1768" /><img alt=""
-                  src="https://b.tile.openstreetmap.org/5/17/17.png"
-                  class="leaflet-tile leaflet-tile-loaded c1775" /><img alt=""
-                  src="https://a.tile.openstreetmap.org/5/19/17.png"
-                  class="leaflet-tile leaflet-tile-loaded c1782" /><img alt=""
-                  src="https://c.tile.openstreetmap.org/5/17/18.png"
-                  class="leaflet-tile leaflet-tile-loaded c1789" /><img alt=""
-                  src="https://b.tile.openstreetmap.org/5/19/18.png"
-                  class="leaflet-tile leaflet-tile-loaded c1796" /><img alt=""
-                  src="https://b.tile.openstreetmap.org/5/18/19.png"
-                  class="leaflet-tile leaflet-tile-loaded c1803" /><img alt=""
-                  src="https://a.tile.openstreetmap.org/5/17/19.png"
-                  class="leaflet-tile leaflet-tile-loaded c1810" /><img alt=""
-                  src="https://c.tile.openstreetmap.org/5/19/19.png"
-                  class="leaflet-tile leaflet-tile-loaded c1817" /><img alt=""
-                  src="https://c.tile.openstreetmap.org/5/18/20.png"
-                  class="leaflet-tile leaflet-tile-loaded c1824" /><img alt=""
-                  src="https://b.tile.openstreetmap.org/5/17/20.png"
-                  class="leaflet-tile leaflet-tile-loaded c1831" /><img alt=""
-                  src="https://a.tile.openstreetmap.org/5/19/20.png" class="leaflet-tile leaflet-tile-loaded c1838" />
-              </div>
-            </div>
-          </div>
-          <div class="leaflet-pane leaflet-overlay-pane"></div>
-          <div class="leaflet-pane leaflet-shadow-pane"><img
-              src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png" alt=""
-              class="leaflet-marker-shadow leaflet-zoom-animated c1933" /></div>
-          <div class="leaflet-pane leaflet-marker-pane"><img
-              src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png" alt="Marker" tabindex="0"
-              role="button" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive c1955" /></div>
-          <div class="leaflet-pane leaflet-tooltip-pane"></div>
-          <div class="leaflet-pane leaflet-popup-pane">
-            <div class="leaflet-popup leaflet-zoom-animated c1988">
-              <div class="leaflet-popup-content-wrapper">
-                <div class="leaflet-popup-content c1996"><strong>HGY Mission HQ</strong><br />Harare, Zimbabwe</div>
-              </div>
-              <div class="leaflet-popup-tip-container">
-                <div class="leaflet-popup-tip"></div>
-              </div><a role="button" aria-label="Close popup" href="#close" class="leaflet-popup-close-button"><span
-                  aria-hidden="true">×</span></a>
-            </div>
-          </div>
-          <div class="leaflet-proxy leaflet-zoom-animated c2118"></div>
-        </div>
-        <div class="leaflet-control-container">
-          <div class="leaflet-top leaflet-left">
-            <div class="leaflet-control-zoom leaflet-bar leaflet-control"><a href="#" title="Zoom in" role="button"
-                aria-label="Zoom in" aria-disabled="false" class="leaflet-control-zoom-in"><span
-                  aria-hidden="true">+</span></a><a href="#" title="Zoom out" role="button" aria-label="Zoom out"
-                aria-disabled="false" class="leaflet-control-zoom-out"><span aria-hidden="true">−</span></a></div>
-          </div>
-          <div class="leaflet-top leaflet-right"></div>
-          <div class="leaflet-bottom leaflet-left"></div>
-          <div class="leaflet-bottom leaflet-right">
-            <div class="leaflet-control-attribution leaflet-control"><a href="https://leafletjs.com"
-                title="A JavaScript library for interactive maps"><svg aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"
-                  class="leaflet-attribution-flag">
-                  <path fill="#4C7BE1" d="M0 0h12v4H0z"></path>
-                  <path fill="#FFD500" d="M0 4h12v3H0z"></path>
-                  <path fill="#E0BC00" d="M0 7h12v1H0z"></path>
-                </svg> Leaflet</a> <span aria-hidden="true">|</span> © OpenStreetMap</div>
-          </div>
-        </div>
-      </div>
+      <div id="contactMap"></div>
     </div>
-  </section><!-- FAQ -->
+  </section>
+
+  <!-- FAQ -->
   <section class="contact-faq">
     <div class="contact-faq-inner">
       <div class="section-label reveal">Common Questions</div>
       <h2 class="section-title reveal">Frequently Asked Questions</h2>
       <div class="faq-item reveal">
-        <div class="faq-q">How can I partner with HGY Mission?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg></div>
-        <div class="faq-a">We welcome partnerships with churches, schools, civil society organisations, and government
-          bodies. Simply reach out through the form above or email us at info@hgymission.org and our partnerships team
-          will respond within two business days.</div>
+        <div class="faq-q">How can I partner with HGY Mission?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="faq-a">We welcome partnerships with churches, schools, civil society organisations, and government bodies. Simply reach out through the form above or email us at info@hgymission.org and our partnerships team will respond within two business days.</div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q">Can I volunteer with HGY Mission?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg></div>
-        <div class="faq-a">Yes, we welcome volunteers in various capacities including community outreach, legal aid
-          support, mentorship, and event coordination. Select the volunteer option in the form above and our team will
-          guide you through the process.</div>
+        <div class="faq-q">Can I volunteer with HGY Mission?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="faq-a">Yes, we welcome volunteers in various capacities including community outreach, legal aid support, mentorship, and event coordination. Select the volunteer option in the form above and our team will guide you through the process.</div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q">What countries does HGY Mission operate in?<svg viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg></div>
-        <div class="faq-a">We currently operate across nine African countries: Zimbabwe, Zambia, Malawi, Mozambique,
-          Burundi, Nigeria, Ghana, Somalia, and Sudan. Visit our Countries page to learn more about our work in each
-          location.</div>
+        <div class="faq-q">What countries does HGY Mission operate in?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="faq-a">We currently operate across nine African countries: Zimbabwe, Zambia, Malawi, Mozambique, Burundi, Nigeria, Ghana, Somalia, and Sudan. Visit our Countries page to learn more about our work in each location.</div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q">How is my donation used?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg></div>
-        <div class="faq-a">All donations go directly toward supporting our programmes in legal aid, protection,
-          empowerment, and community resilience. We maintain full financial transparency and provide annual impact
-          reports
-          to our donors.</div>
+        <div class="faq-q">How is my donation used?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="faq-a">All donations go directly toward supporting our programmes in legal aid, protection, empowerment, and community resilience. We maintain full financial transparency and provide annual impact reports to our donors.</div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q">I need urgent help. What should I do?<svg viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg></div>
-        <div class="faq-a">If you or someone you know is in immediate danger, please contact local emergency services
-          first. For urgent support from HGY Mission, use the emergency email below and our team will respond as quickly
-          as possible.</div>
+        <div class="faq-q">I need urgent help. What should I do?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="faq-a">If you or someone you know is in immediate danger, please contact local emergency services first. For urgent support from HGY Mission, use the emergency email below and our team will respond as quickly as possible.</div>
       </div>
     </div>
-  </section><!-- Emergency Contact Banner -->
+  </section>
+
+  <!-- Emergency Contact Banner -->
   <section class="emergency-contact">
     <div class="emergency-inner">
       <div class="section-label reveal">Urgent Support</div>
       <h2 class="section-title reveal">In Case of Emergency</h2>
-      <p class="section-body reveal">If you or someone you know is in immediate danger, please contact local authorities
-        first. For urgent matters requiring our attention, reach us directly at the email below.</p><a
-        href="mailto:emergency@hgymission.org" class="emergency-email reveal">emergency@hgymission.org</a>
+      <p class="section-body reveal">If you or someone you know is in immediate danger, please contact local authorities first. For urgent matters requiring our attention, reach us directly at the email below.</p>
+      <a href="mailto:emergency@hgymission.org" class="emergency-email reveal">emergency@hgymission.org</a>
     </div>
-  </section><!-- Footer -->
-  <footer><a href="index.html" class="footer-back"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round">
-        <line x1="19" y1="12" x2="5" y2="12"></line>
-        <polyline points="12 19 5 12 12 5"></polyline>
-      </svg>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <a href="index.html" class="footer-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
       Back to Home
     </a>
     <div class="footer-grid">
       <div>
-        <div class="footer-brand-logo"><img src="https://i.imgur.com/LtgUvvp.png" alt="HGY" />
-          <div>
-            <div class="footer-abbr">HGY Mission</div>
-            <div class="footer-full"></div>
-          </div>
+        <div class="footer-brand-logo">
+          <img src="https://i.imgur.com/Fb5JAWe.png" alt="HGY Mission"/>
+          <div><div class="footer-abbr">HGY Mission</div><div class="footer-full"></div></div>
         </div>
-        <p class="footer-tagline">A faith driven human rights organisation standing for the weak, the marginalised, and
-          the forgotten.</p>
-        <div class="footer-socials"><a href="#" aria-label="Facebook" class="social-btn"><svg viewBox="0 0 24 24"
-              fill="currentColor">
-              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-            </svg></a><a href="#" aria-label="Twitter" class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-              </path>
-            </svg></a><a href="#" aria-label="Instagram" class="social-btn"><svg viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg></a></div>
+        <p class="footer-tagline">A faith driven human rights organisation standing for the weak, the marginalised, and the forgotten — because every life is sacred.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" class="social-btn" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#3d0620"/></svg></a>
+          <a href="#" class="social-btn" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        </div>
       </div>
       <div>
-        <div class="footer-col-title">Explore</div>
+        <div class="footer-col-title">Quick Links</div>
         <ul class="footer-links">
+          <li><a href="about.html">About HGY</a></li>
           <li><a href="partnerships.html">Partnerships</a></li>
-          <li><a href="projects.html">Projects</a></li>
-          <li><a href="activities.html">Activities</a></li>
+          <li><a href="projects.html">Our Projects</a></li>
+          <li><a href="activities.html">Core Activities</a></li>
           <li><a href="conferences.html">Conferences</a></li>
           <li><a href="countries.html">Countries</a></li>
+          <li><a href="donate.html">Donate</a></li>
         </ul>
       </div>
       <div>
-        <div class="footer-col-title">Contact</div>
+        <div class="footer-col-title">Contact Us</div>
         <div class="footer-contact">
-          <p>info@hgymission.org</p>
-          <p>+260 974925062</p>
-          <p></p>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Ørbækvej 716, 5220 Odense SØ, Denmark</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.39 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13"/></svg>
+            <span>+45 60 29 90 42</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span>info@hgymission.org</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span>www.hgymission.org</span>
+          </div>
         </div>
       </div>
     </div>
-    <div class="footer-bottom"><span>© 2025 HGY Mission. All rights reserved.</span><span class="footer-sep">|</span><a
-        href="#">Privacy Policy</a><span class="footer-sep">|</span><a href="#">Terms of Use</a></div>
-  </footer><!-- Scripts -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Holy Ground of Yahweh Mission. All rights reserved.</span>
+      <span class="footer-reg">Founded 2017 &middot; Registered NGO &middot; Faith Driven Human Rights</span>
+    </div>
+  </footer>
 
-  </div>
-  <div id="ninja-disconnect-overlay">
-    <div id="ninja-disconnect-overlay-text">Connection to Ninja computer lost.</div>
-    <div id="ninja-disconnect-overlay-text-2">Please reconnect to continue.</div><button
-      id="ninja-disconnect-reconnect-button"><span id="ninja-disconnect-spinner"></span><span
-        id="ninja-disconnect-button-text">Reconnect</span></button>
-  </div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    // Nav toggle
+    // Cursor
+    if(window.matchMedia('(pointer:fine)').matches){const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');let mx=0,my=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});(function loop(){dot.style.left=mx+'px';dot.style.top=my+'px';rx+=(mx-rx)*.14;ry+=(my-ry)*.14;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();document.querySelectorAll('a,button,.faq-item').forEach(el=>{el.addEventListener('mouseenter',()=>{ring.style.width='48px';ring.style.height='48px'});el.addEventListener('mouseleave',()=>{ring.style.width='34px';ring.style.height='34px'})})}
+
+    // Nav scroll
+    window.addEventListener('scroll',()=>{document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>40)},{passive:true});
+
+    // Nav burger
     const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
-    burger.addEventListener('click',()=>{navLinks.classList.toggle('open');burger.classList.toggle('active')});
-    
+    burger.addEventListener('click',()=>{burger.classList.toggle('open');navLinks.classList.toggle('open')});
+    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger.classList.remove('open');navLinks.classList.remove('open')}));
+
     // Scroll reveal
-    const reveals=document.querySelectorAll('.reveal');
-    const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target)}})},{threshold:.12});
-    reveals.forEach(el=>io.observe(el));
-    
+    const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.08});
+    document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
     // Map
-    const map=L.map('contactMap',{scrollWheelZoom:false}).setView([-19.0,29.15],5);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap'}).addTo(map);
-    L.marker([-19.0154,29.1549]).addTo(map).bindPopup('<strong>HGY Mission HQ</strong><br>Harare, Zimbabwe').openPopup();
-    
-    // Contact form handler
+    const map=L.map('contactMap',{scrollWheelZoom:false}).setView([55.3667,10.4333],13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+    L.marker([55.3667,10.4333]).addTo(map).bindPopup('<strong style="color:#5c0a2e">HGY Mission</strong><br/>Ørbækvej 716, 5220 Odense SØ').openPopup();
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item=>{
+      item.addEventListener('click',()=>{
+        const isOpen=item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+        if(!isOpen)item.classList.add('open');
+      });
+    });
+
+    // Contact form
     function handleContact(e){
       e.preventDefault();
       const btn=e.target.querySelector('.form-submit');
@@ -408,7 +322,6 @@
         e.target.reset();
         setTimeout(()=>{btn.textContent='Send Message';btn.style.background='';btn.disabled=false},3000);
       },1500);
-      return false;
     }
   </script>
 </body>
